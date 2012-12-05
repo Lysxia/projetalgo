@@ -240,6 +240,11 @@ void _strassen (int * A, int * B, int * C,
 
 
   // Calcul de X6
+    // M11 - M21 (à inverser)
+  _sub (A21, A22, M, _m, _n, mA1, nA2, mA2, nA2, width_A, width_A, _n);
+    // N21 + N22
+  _add (B21, B22, N, _m, _n, mA2, nA1, mA2, nA2, width_A, width_A, _n);
+  
 }
 
 int main ()
