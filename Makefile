@@ -1,4 +1,2 @@
-test: test.c strassen.c
-	gcc strassen.c test.c
-
-strassen.o:
+all:
+	gcc -std=c99 naive.c
