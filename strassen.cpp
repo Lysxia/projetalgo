@@ -63,10 +63,12 @@ int * strassen (int * A, int * B, int m, int n, int o)
 }
 
 
-// WANRING : la matrice A doit TOUJOURS être celle qui a le plus de
-// colonnes non vides
+// WANRING : la matrice indiquée par "big_left" (càd gauche si true) doit 
+// TOUJOURS être celle qui a le plus de colonnes non vides
 // Dans l'algorithme, on peut toujours la prendre ayant également
 // le plus de lignes non vides
+// WANRING : il faudra parfois inverser la matrice résultat
+template<bool sub, bool big_left>
 void _add (int * A, int * B, int * C,
            // Dimensions abstraites
            int m, int n,
@@ -75,58 +77,102 @@ void _add (int * A, int * B, int * C,
            // Nombre de colonnes des matrices totales
            int width_A, int width_B, int width_C)
 {
-  // Lignes de B non vides
-  for (int i = 0; i < mB; i++)
+  if (big_left)
   {
-    // Colonnes de B non vides
-    for (int j = 0; j < nB; j++)
-      C[j + i * width_C] = A[j + i * width_A] + B[j + i * width_B];
+    // Matrice avec le moins de zones vides à gauche
+    // Lignes de B non vides
+    for (int i = 0; i < mB; i++)
+    {
+      // Colonnes de B non vides
+      for (int j = 0; j < nB; j++)
+	if (sub)
+	  C[j + i * width_C] = A[j + i * width_A] - B[j + i * width_B];
+	else
+	  C[j + i * width_C] = A[j + i * width_A] + B[j + i * width_B];
+      
+      // Colonnes de A "seules"
+      for (int j = nB; j < nA; j++)
+	C[j + i * width_C] = A[j + i * width_A];
+    }
     
-    // Colonnes de A "seules"
-    for (int j = nB; j < nA; j++)
-      C[j + i * width_C] = A[j + i * width_A];
+    // Lignes de A "seules" (et non vides)
+    for (int i = mB; i < mA; i++)
+      for (int j = 0; j < nA; j++)
+	C[j + i * width_C] = A[j + i * width_A];
+
+  } 
+  else
+  {
+    // Matrice avec le moins de zones vides à droite
+    // TODO 
   }
-
-  // Lignes de A "seules" (et non vides)
-  for (int i = mB; i < mA; i++)
-    for (int j = 0; j < nA; j++)
-      C[j + i * width_C] = A[j + i * width_A];
-
+  
 }
 
 
-// TODO : template
+// WANRING : la matrice A doit TOUJOURS être celle qui a le plus de
+// colonnes non vides
+// Dans l'algorithme, on peut toujours la prendre ayant également
+// le plus de lignes non vides
+// void _add (int * A, int * B, int * C,
+//            // Dimensions abstraites
+//            int m, int n,
+//            // Dim des sous-matrices non nulles
+//            int mA, int nA, int mB, int nB,
+//            // Nombre de colonnes des matrices totales
+//            int width_A, int width_B, int width_C)
+// {
+//   // Lignes de B non vides
+//   for (int i = 0; i < mB; i++)
+//   {
+//     // Colonnes de B non vides
+//     for (int j = 0; j < nB; j++)
+//       C[j + i * width_C] = A[j + i * width_A] + B[j + i * width_B];
+    
+//     // Colonnes de A "seules"
+//     for (int j = nB; j < nA; j++)
+//       C[j + i * width_C] = A[j + i * width_A];
+//   }
+
+//   // Lignes de A "seules" (et non vides)
+//   for (int i = mB; i < mA; i++)
+//     for (int j = 0; j < nA; j++)
+//       C[j + i * width_C] = A[j + i * width_A];
+
+// }
+
+
 // WANRING : la matrice A doit TOUJOURS être celle qui a le plus de
 // colonnes non vides
 // Dans l'algorithme, on peut toujours la prendre ayant également
 // le plus de lignes non vides
 // WANRING : il faudra parfois inverser la matrice résultat
-void _sub (int * A, int * B, int * C,
-           // Dimensions abstraites
-           int m, int n,
-           // Dim des sous-matrices non nulles
-           int mA, int nA, int mB, int nB,
-           // Nombre de colonnes des matrices totales
-           int width_A, int width_B, int width_C)
-{
-  // Lignes de B non vides
-  for (int i = 0; i < mB; i++)
-  {
-    // Colonnes de B non vides
-    for (int j = 0; j < nB; j++)
-      C[j + i * width_C] = A[j + i * width_A] - B[j + i * width_B];
+// void _sub (int * A, int * B, int * C,
+//            // Dimensions abstraites
+//            int m, int n,
+//            // Dim des sous-matrices non nulles
+//            int mA, int nA, int mB, int nB,
+//            // Nombre de colonnes des matrices totales
+//            int width_A, int width_B, int width_C)
+// {
+//   // Lignes de B non vides
+//   for (int i = 0; i < mB; i++)
+//   {
+//     // Colonnes de B non vides
+//     for (int j = 0; j < nB; j++)
+//       C[j + i * width_C] = A[j + i * width_A] - B[j + i * width_B];
     
-    // Colonnes de A "seules"
-    for (int j = nB; j < nA; j++)
-      C[j + i * width_C] = A[j + i * width_A];
-  }
+//     // Colonnes de A "seules"
+//     for (int j = nB; j < nA; j++)
+//       C[j + i * width_C] = A[j + i * width_A];
+//   }
 
-  // Lignes de A "seules" (et non vides)
-  for (int i = mB; i < mA; i++)
-    for (int j = 0; j < nA; j++)
-      C[j + i * width_C] = A[j + i * width_A];
+//   // Lignes de A "seules" (et non vides)
+//   for (int i = mB; i < mA; i++)
+//     for (int j = 0; j < nA; j++)
+//       C[j + i * width_C] = A[j + i * width_A];
 
-}
+// }
 
 
 void _strassen (int * A, int * B, int * C, 
@@ -228,9 +274,9 @@ void _strassen (int * A, int * B, int * C,
   
   // Calcul de X7
     // M12 - M22
-  _sub (A12, A22, M, _m, _n, mA1, nA2, mA2, nA2, width_A, width_A, _n);
+  _add<true, true> (A12, A22, M, _m, _n, mA1, nA2, mA2, nA2, width_A, width_A, _n);
     // N21 + N22
-  _add (B21, B22, N, _m, _n, mA2, nA1, mA2, nA2, width_A, width_A, _n);
+  _add<false, true> (B21, B22, N, _m, _n, mA2, nA1, mA2, nA2, width_A, width_A, _n);
 
   _strassen (M, N, X7, _m, _n, _o, 
              mA1, // Forcément plus grand que mA2
@@ -241,15 +287,16 @@ void _strassen (int * A, int * B, int * C,
 
   // Calcul de X6
     // M11 - M21 (à inverser)
-  _sub (A21, A22, M, _m, _n, mA1, nA2, mA2, nA2, width_A, width_A, _n);
+  _add<true, true> (A21, A22, M, _m, _n, mA1, nA2, mA2, nA2, width_A, width_A, _n);
     // N21 + N22
-  _add (B21, B22, N, _m, _n, mA2, nA1, mA2, nA2, width_A, width_A, _n);
+  _add<false, true> (B21, B22, N, _m, _n, mA2, nA1, mA2, nA2, width_A, width_A, _n);
   
 }
 
 int main ()
 {
-  if (NULL == (mem = malloc (3000000000)))
+  // if (NULL == (mem = malloc (3000000000)))
+  if (0 == (mem = (int*) malloc (3000000000u)))
   {
     printf("Major failure ! Memory not allocated. Bye\n");
     return 1;
