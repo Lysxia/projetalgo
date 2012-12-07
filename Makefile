@@ -1,2 +1,2 @@
 all:
-	g++ strassen.cpp
+	g++ -O2 strassen.cpp

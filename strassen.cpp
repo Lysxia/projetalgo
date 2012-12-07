@@ -2,7 +2,8 @@
 #include<stdlib.h>
 #include"strassen.h"
 
-#define alloc(n) (sp += n * sizeof (int), sp - n * sizeof(int))
+//#define alloc(n) (sp += n * sizeof (int), sp - n * sizeof(int))
+#define alloc(n) malloc(n)
 
 #define min(a,b) (a <= b ? a : b)
 #define max(a,b) (a >= b ? a : b)
@@ -35,7 +36,7 @@ int * read_matrix (int m, int n)
   /* _m = next_pow_2 (m); */
   /* _n = next_pow_2 (n); */
 
-  int * r = alloc (m * n);
+  int * r = (int*) alloc (m * n);
 
   for (int i = 0; i < m * n; i++)
     scanf("%d ", r + i);
@@ -59,7 +60,7 @@ void print_matrix (int * A, int m, int n)
 
 int * strassen (int * A, int * B, int m, int n, int o)
 {
-  int *C = alloc (m * o);
+  int *C = (int*) alloc (m * o);
 }
 
 
@@ -68,7 +69,9 @@ int * strassen (int * A, int * B, int m, int n, int o)
 // Dans l'algorithme, on peut toujours la prendre ayant également
 // le plus de lignes non vides
 // WANRING : il faudra parfois inverser la matrice résultat
+// TODO : faire une macro pour ça :D
 template<bool sub, bool big_left>
+inline
 void _add (int * A, int * B, int * C,
            // Dimensions abstraites
            int m, int n,
@@ -236,8 +239,8 @@ void _strassen (int * A, int * B, int * C,
   int _n = (n+1) / 2;
   int _o = (o+1) / 2;
 
-  M = alloc ( _m * _n);
-  N = alloc ( _n * _o);
+  M = (int*) alloc ( _m * _n);
+  N = (int*) alloc ( _n * _o);
 
 
   int * X4 = C + width_C * _m;      // X4 = P21
@@ -270,37 +273,79 @@ void _strassen (int * A, int * B, int * C,
 
   
 
-  int * X = alloc (_m * _o);
+  int * X = (int*) alloc (_m * _o);
+
+  // TODO : script-générer les calculs suivants
   
   // Calcul de X7
-    // M12 - M22
+    // A12 - A22
   _add<true, true> (A12, A22, M, _m, _n, mA1, nA2, mA2, nA2, width_A, width_A, _n);
-    // N21 + N22
-  _add<false, true> (B21, B22, N, _m, _n, mA2, nA1, mA2, nA2, width_A, width_A, _n);
+    // B21 + B22
+  _add<false, true> (B21, B22, N, _n, _o, nB2, oB1, nB2, oB2, width_B, width_B, _o);
 
   _strassen (M, N, X7, _m, _n, _o, 
              mA1, // Forcément plus grand que mA2
-             nA2, mA2, 
-             nA1, // Forcément plus grand que nA2
+             nA2, 
+             nB2, 
+             oB1, // Forcément plus grand que nA2
              _n, _o, width_C);
 
 
   // Calcul de X6
-    // M11 - M21 (à inverser)
+    // A11 - A21
   _add<true, true> (A21, A22, M, _m, _n, mA1, nA2, mA2, nA2, width_A, width_A, _n);
-    // N21 + N22
-  _add<false, true> (B21, B22, N, _m, _n, mA2, nA1, mA2, nA2, width_A, width_A, _n);
+    // B11 + B12
+  _add<false, true> (B11, B12, N, _n, _o, nB1, oB1, nB1, oB2, width_B, width_B, _o);
+
+  _strassen (M, N, X6, _m, _n, _o, 
+             mA2,
+             nA1, // + que nA2
+             nB1, 
+             oB1, // Forcément plus grand que oB2
+             _n, _o, width_C);
   
+
+  // Calcul de X5
+    // A11 + A12
+  _add<false, true> (A11, A12, M, _m, _n, mA1, nA1, mA1, nA2, width_A, width_A, _n);
+
+  _strassen (M, B22, X5, _m, _n, _o, 
+             mA1,
+             nA1,
+             nB2, 
+             oB2,
+             _n, width_B, width_C);
+
+
+  // Calcul de X4
+    // B21 - B11
+  _add<true, false> (B21, B11, N, _n, _o, nB2, oB1, nB1, oB1, width_B, width_B, _o);
+
+  _strassen (A22, N, X4, _m, _n, _o, 
+             mA2,
+             nA2,
+             nB1, // Forcément plus grand que nB2 
+             oB1,
+             width_A, _o, width_C);
+
+  // Ajout de X4 à P11 (X7)
+  _add<true, true> (X7, X4, X7, _m, _o, 
+                    // Note : on passe la taille de X4 à chaque fois pour éviter les parcours inutiles
+                    mA2, oB1, mA2, oB1,
+                    width_C, width_C, width_C);
+
 }
 
 int main ()
 {
   // if (NULL == (mem = malloc (3000000000)))
-  if (0 == (mem = (int*) malloc (3000000000u)))
-  {
-    printf("Major failure ! Memory not allocated. Bye\n");
-    return 1;
-  }
+
+  // TODO
+  // if (0 == (mem = (int*) malloc (3000000000u)))
+  // {
+  //   printf("Major failure ! Memory not allocated. Bye\n");
+  //   return 1;
+  // }
 
   sp = mem;
 
