@@ -2,6 +2,9 @@
 #define STRASSEN_H
 #include "matrixio.h"
 
+#define OPTIM 1
+#define OPTIM2 1
+
 int * strassen(int*,int*,int,int,int);
 void _strassen(int*,int*,int*,int,int,int,int,int,int);
 
@@ -65,6 +68,22 @@ void _add (int * A, int * B, int * C,
 
   //print_extr(C,(big_left)?mA:mB,(big_left)?nA:nB,width_C);
   return;
+}
+
+// Equivalent de += ou -=
+template<bool sub>
+inline
+void _add_in (int *A, int *B, int m, int n, int width_A, int width_B)
+{
+    for (int i=0 ; i<m ; i++)
+        for (int j=0 ; j<n ; j++)
+	{
+	    if (sub)
+	        A[j+i*width_A]-=B[j+i*width_B];
+	    else
+		A[j+i*width_A]+=B[j+i*width_B];
+	}
+    return;
 }
 
 #endif

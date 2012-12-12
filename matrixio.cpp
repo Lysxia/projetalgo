@@ -2,7 +2,6 @@
 #include<stdlib.h>
 #include"matrixio.h"
 
-#define PRINT false
 
 // Fonctions de lecture et affichage, représentation brute
 int * read_matrix (int m, int n)
@@ -19,12 +18,10 @@ int * read_matrix (int m, int n)
 
 void print_matrix (int * A, int m, int n)
 {
-#if PRINT
   printf ("Matrix %d %d :\n", m, n);
 
   for (int i = 0; i < m * n; i++)
     printf((i + 1) % n ? "%d " : "%d\n", A[i]);
-#endif
 }
 
 // Représentation sous-matrice

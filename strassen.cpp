@@ -6,7 +6,6 @@
 #define min(a,b) (a <= b ? a : b)
 #define max(a,b) (a >= b ? a : b)
 
-
 /* Représentation brute d'une matrice m*n :
  *   - Pointeur sur la case (0,0) : M
  *   - Largeur : n
@@ -59,6 +58,7 @@ void _strassen (int * A, int * B, int * C,
   if (m <= 0 || n <= 0 || o <= 0)
     return;
 
+#if OPTIM==1
   // A n'est plus qu'une matrice ligne... On multiplie à la main
   if (m == 1)
   {
@@ -102,6 +102,42 @@ void _strassen (int * A, int * B, int * C,
     //print_extr(C,m,o,width_C);
     return;
   }
+
+  // optimisation non conclusive
+#elif OPTIM==2
+  if (m==1)
+  {
+      int *nA=A+n, *oC=C+o;
+      for (int *kc=C, *kb=B ; kc<oC ; kc++, kb++)
+      {
+	  *kc=0;
+	  for (int *jb=kb, *ja=A ; ja<nA ; jb+=width_B, ja++)
+	      *kc += *ja* *jb;
+      }
+      return;
+  }
+
+  if (o==1)
+  {
+      int *mA=A+m*width_A, *nB=B+n*width_B;
+      for (int *ia=A, *ic=C ; ia<mA ; ia+=width_A, ic+=width_C)
+      {
+	  *ic=0;
+	  for (int *ja=ia, *jb=B ; jb<nB ; jb+=width_B, ja++)
+	      *ic += *ja* *jb;
+      }
+      return;
+  }
+
+  if (n==1)
+  {
+      int *mA=A+m*width_A, *oB=B+o;
+      for (int *ia=A, *ic=C ; ia<mA ; ia+=width_A, ic+=width_C)
+	  for (int *kb=B, *kc=ic ; kb<oB ; kb++, kc++)
+	      *kc = *ia* *kb;
+      return;
+  }
+#endif
 
   // Petites dimensions
   int m1 = (m+1)/2;
@@ -183,6 +219,7 @@ void _strassen (int * A, int * B, int * C,
              m2, n2, o1,
              width_A, o1, width_C);
 
+#if OPTIM2==1
   // X7 (P11) <- X7 + X4
   _add<false, true> (X7, X4, X7,
 	  // Note : on passe la taille de X4 à chaque fois
@@ -192,6 +229,11 @@ void _strassen (int * A, int * B, int * C,
 
   // X7 <- X7 - X5
   _add<true, true> (X7, X5, X7, m1, o2, m1, o2, width_C, width_C, width_C);
+
+#elif OPTIM2==2
+  _add_in<false> (X7, X4, m2, o1, width_C, width_C);
+  _add_in<true> (X7, X5, m1, o2, width_C, width_C);
+#endif
 
 
   // Calcul de X3
@@ -203,12 +245,17 @@ void _strassen (int * A, int * B, int * C,
 	     m1, n1, o2,
 	     width_A, o1, o1);
 
+#if OPTIM2==1
   // X5 (P12) <- X5 + X3
-  _add<false, true> (X, X5, X5, m1, o2, m1, o2, o1, width_C, width_C);
+  _add<false, true> (X5, X, X5, m1, o2, m1, o2, width_C, o1, width_C);
 
   // X6 (P22) <- X6 + X3
-  _add<false, true> (X, X6, X6, m2, o2, m2, o2, o1, width_C, width_C);
+  _add<false, true> (X6, X, X6, m2, o2, m2, o2, width_C, o1, width_C);
 
+#elif OPTIM2==2
+  _add_in<false> (X5, X, m1, o2, width_C, o1);
+  _add_in<false> (X6, X, m2, o2, width_C, o1);
+#endif
 
   // Calcul de X2
     // M <- A21 + A22
@@ -219,12 +266,17 @@ void _strassen (int * A, int * B, int * C,
 	     m2, n1, o1,
 	     n1, width_B, o1);
 
+#if OPTIM2==1
   // X4 (P21) <- X4 + X2
   _add<false, true> (X4, X, X4, m2, o1, m2, o1, width_C, o1, width_C);
 
   // X6 (P22) <- X6 - X2
   _add<true, true> (X6, X, X6, m2, o2, m2, o2, width_C, o1, width_C);
 
+#elif OPTIM2==2
+  _add_in<false> (X4, X, m2, o1, width_C, o1);
+  _add_in<true> (X6, X, m2, o2, width_C, o1);
+#endif
 
   // Calcul de X1
     // M <- A11 + A22
@@ -237,11 +289,17 @@ void _strassen (int * A, int * B, int * C,
 	     m1, n1, o1,
 	     n1, o1, o1);
 
+#if OPTIM2==1
   // X7 (P11) <- X7 + X1
   _add<false, true> (X7, X, X7, m1, o1, m1, o1, width_C, o1, width_C);
 
   // X6 (P22) <- X6 + X1
   _add<false, true> (X6, X, X6, m2, o2, m2, o2, width_C, o1, width_C);
+
+#elif OPTIM2==2
+  _add_in<false> (X7, X, m1, o1, width_C, o1);
+  _add_in<false> (X6, X, m2, o2, width_C, o1);
+#endif
 
   sp -= m1*n1+n1*o1+m1*o1;
 

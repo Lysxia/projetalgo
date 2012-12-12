@@ -9,6 +9,15 @@ strassen: $(OBJ)
 test: test.txt
 	./strassen < test.txt
 
+test100: rand2 strassen
+	./rand2 100 100 100 | ./strassen
+
+test1000: rand2 strassen
+	./rand2 1000 1000 1000 | ./strassen
+
+test2000: rand2 strassen
+	./rand2 2000 2000 2000 | ./strassen
+
 rand2: randmatrices.c
 	gcc randmatrices.c -o rand2
 

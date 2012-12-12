@@ -42,10 +42,10 @@ int main (int argn, char** argv)
       printf("Could not read 2nd matrix.\n");
       return 1;
   }
-
+#if PRINT
   print_matrix(A, m, n);
   print_matrix(B, n, o);
-
+#endif
   printf("Strassen...\n");
 
   t=clock();
@@ -54,9 +54,11 @@ int main (int argn, char** argv)
       printf("Multiplication failed.\n");
       return 1;
   }
-  printf("Time : %fs\n",(clock()-t)/CLOCKS_PER_SEC);
+  printf("Time : %.3fs\n",(clock()-t)/CLOCKS_PER_SEC);
 
+#if PRINT
   print_matrix(C, m, o);
+#endif
 
   printf("Naive mult...\n");
   t=clock();
@@ -65,9 +67,11 @@ int main (int argn, char** argv)
       printf("Multiplication failed.\n");
       return 1;
   }
-  printf("Time : %fs\n",(clock()-t)/CLOCKS_PER_SEC);
+  printf("Time : %.3fs\n",(clock()-t)/CLOCKS_PER_SEC);
 
+#if PRINT
   print_matrix(D, m, o);
+#endif
 
   if (matrix_equal(C,D,m,o))
       printf("1 : Okay\n");
