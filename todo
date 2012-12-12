@@ -1,4 +1,6 @@
 - Vérifier que le compilo déplie bien les templates
 - Génération de code via script
 - Strassen naïf
-- Script de test
+- Script de test : finir le parsing de l'écriture des résultats
+- Rapport
+- Faire un test pour comparer les boucles utilisant des indices aux boucles incrémentant directement les pointeurs
