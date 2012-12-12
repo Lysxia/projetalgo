@@ -1,0 +1,17 @@
+9d6f3af7258ee2d69be1ddc46bdbababa01b64cf
+Intel(R) Core(TM)2 Duo CPU     E7500  @ 2.93GHz
+    5000 5000 5000 
+    Strassen...
+    Time : 516.369995s
+    Naive mult...
+    Time : 830.309998s
+    1 : Okay
+
+    6000 6000 6000
+    Strassen...
+    Time : 824.520020s
+    Naive mult...
+    Time : 1586.239990s
+    1 : Okay
+
+
