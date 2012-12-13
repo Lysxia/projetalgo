@@ -45,8 +45,8 @@ int main (int argn, char** argv)
 #if PRINT
   print_matrix(A, m, n);
   print_matrix(B, n, o);
-#endif
   printf("Strassen...\n");
+#endif
 
   t=clock();
   if (0 == (C = strassen(A,B,m,n,o)))
@@ -54,33 +54,40 @@ int main (int argn, char** argv)
       printf("Multiplication failed.\n");
       return 1;
   }
-  printf("Time : %.3fs\n",(clock()-t)/CLOCKS_PER_SEC);
 
 #if PRINT
+  printf("Time : %.3fs\n",(clock()-t)/CLOCKS_PER_SEC);
   print_matrix(C, m, o);
+#else
+  printf("%.4f,",(clock()-t)/CLOCKS_PER_SEC);
 #endif
 
+#if PRINT
   printf("Naive mult...\n");
+#endif
+
   t=clock();
   if (0 == (D = mult(A,B,m,n,o)))
   { 
       printf("Multiplication failed.\n");
       return 1;
   }
-  printf("Time : %.3fs\n",(clock()-t)/CLOCKS_PER_SEC);
 
 #if PRINT
+  printf("Time : %.3fs\n",(clock()-t)/CLOCKS_PER_SEC);
   print_matrix(D, m, o);
-#endif
 
   if (matrix_equal(C,D,m,o))
       printf("1 : Okay\n");
   else printf("0 : Not Okay\n");
+#else
+  printf("%.4f\n",(clock()-t)/CLOCKS_PER_SEC);
+#endif
 
   free(A);
   free(B);
   free(C);
-  //free(D);
+  free(D);
   A=B=C=D=0;
 #endif
 

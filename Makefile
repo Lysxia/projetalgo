@@ -1,7 +1,7 @@
-OBJ= matrixio.o naive.o strassen.o main.o
+OBJ= matrixio.o naive.o strassen.o
 
-strassen: $(OBJ)
-	g++ -O2 $(OBJ) -o strassen
+strassen: $(OBJ) main.o
+	g++ -O2 $(OBJ) main.o -o strassen
 
 %.o: %.cpp %.h
 	g++ -O2 $< -c
