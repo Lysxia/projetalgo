@@ -21,6 +21,12 @@ test2000: rand2 strassen
 rand2: randmatrices.c
 	gcc randmatrices.c -o rand2
 
+
+paren:
+	g++ parenthesization.cpp
+
+
+# Général
 clean:
 	rm -f *\~ *.o *.gch
 
