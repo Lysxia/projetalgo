@@ -16,7 +16,7 @@ done
 
 for i in {1000..2000..100} # Start - stop - increment
 do 
-    echo $i","
+    echo -n $i","
     ./rand2 $i $i $i | ./strassen
 done
 
