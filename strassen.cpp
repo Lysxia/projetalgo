@@ -29,7 +29,7 @@ int * strassen (int * A, int * B, int m, int n, int o)
 {
   /* Pour économiser des appels à malloc on alloue la mémoire
    * nécessaire d'avance pour la fonction strassen */
-  if (0 == (mem = (int*) malloc (1000000000*sizeof(int))))
+  if (0 == (mem = (int*) malloc ((m*n+n*o+o*m)*sizeof(int))))
   {
     printf("Major failure ! Memory not allocated. Bye.\n");
     return 0;
