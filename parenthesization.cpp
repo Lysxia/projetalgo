@@ -4,16 +4,16 @@
 #define min(a,b) (a < b ? a : b)
 
 
-typedef uint32_t size_t;
+typedef uint32_t mat_size_t;
 typedef uint32_t cost_t;
 
-cost_t get_cost (size_t m, size_t n, size_t o)
+cost_t get_cost (mat_size_t m, mat_size_t n, mat_size_t o)
 {
   return m * n * o; // TODO
 }
 
 
-int /* ← TODO */ get_optimal_product (int term_c, size_t * sizes)
+int /* ← TODO */ get_optimal_product (int term_c, mat_size_t * sizes)
 {
 #define cost(i,j) c[j + i * term_c]
 #define begin {
@@ -53,4 +53,11 @@ int /* ← TODO */ get_optimal_product (int term_c, size_t * sizes)
 #undef cost
 #undef begin
 #undef end
+}
+
+
+
+int main () 
+{
+  
 }
