@@ -4,3 +4,4 @@
 - Script de test : finir le parsing de l'écriture des résultats
 - Rapport
 - Faire un test pour comparer les boucles utilisant des indices aux boucles incrémentant directement les pointeurs
+- Vérifier qu'on clean en sortie
