@@ -1,9 +1,9 @@
 #ifndef STRASSEN_H
 #define STRASSEN_H
-#include "matrixio.h"
+#include"matrixio.h"
+#include"const.h" 
 
-#define OPTIM 1
-#define OPTIM2 1
+#define ENDREC(m,n,p) m<=STOP || n<=STOP || p<=STOP
 
 int * strassen(int*,int*,int,int,int);
 void _strassen(int*,int*,int*,int,int,int,int,int,int);

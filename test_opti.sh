@@ -40,4 +40,20 @@ do
     ./rand2 $i $i $i | ./strassen$tmp
 done
 
+if [ true ]
+then
+
+  for i in {11000..20000..1000}
+  do
+      echo -n $i","
+      ./rand2 $i $i $i | ./strassen$tmp
+  done
+
+  for i in {25000..50000..5000}
+  do
+      echo -n $i","
+      ./rand2 $i $i $i | ./strassen$tmp
+  done
+fi
+
 rm -f strassen$tmp

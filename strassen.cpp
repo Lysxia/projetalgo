@@ -2,6 +2,7 @@
 #include<stdio.h>
 #include"strassen.h"
 #include"matrixio.h"
+#include"const.h"
 
 #define min(a,b) (a <= b ? a : b)
 #define max(a,b) (a >= b ? a : b)
@@ -55,6 +56,7 @@ void _strassen (int * A, int * B, int * C,
                 // Nombre de colonnes des matrices totales
                 int width_A, int width_B, int width_C)
 {
+#if OPTIM3==1
   if (m <= 0 || n <= 0 || o <= 0)
     return;
 
@@ -136,6 +138,20 @@ void _strassen (int * A, int * B, int * C,
 	  for (int *kb=B, *kc=ic ; kb<oB ; kb++, kc++)
 	      *kc = *ia* *kb;
       return;
+  }
+#endif
+
+#elif OPTIM3==2
+  if (ENDREC(m,n,o))
+  {
+     for (int i=0 ; i<m ; i++)
+	 for (int k=0 ; k<o ; k++)
+	 {
+	     C[k+i*width_C]=0;
+	     for (int j=0 ; j<n ; j++)
+		 C[k+i*width_C]+=A[j+i*width_A]*B[k+j*width_B];
+	 }
+     return;
   }
 #endif
 

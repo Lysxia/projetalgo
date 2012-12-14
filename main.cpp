@@ -5,6 +5,7 @@
 #include"strassen.h"
 #include"matrixio.h"
 #include"naive.h"
+#include CONST
 
 int main (int argn, char** argv)
 {
@@ -59,13 +60,14 @@ int main (int argn, char** argv)
   printf("Time : %.3fs\n",(clock()-t)/CLOCKS_PER_SEC);
   print_matrix(C, m, o);
 #else
-  printf("%.4f,",(clock()-t)/CLOCKS_PER_SEC);
+  printf((MULT_NAIVE)?"%.4f,":"%.4f\n",(clock()-t)/CLOCKS_PER_SEC);
 #endif
 
 #if PRINT
   printf("Naive mult...\n");
 #endif
 
+#if MULT_NAIVE
   t=clock();
   if (0 == (D = mult(A,B,m,n,o)))
   { 
@@ -83,7 +85,7 @@ int main (int argn, char** argv)
 #else
   printf("%.4f\n",(clock()-t)/CLOCKS_PER_SEC);
 #endif
-
+#endif
   free(A);
   free(B);
   free(C);

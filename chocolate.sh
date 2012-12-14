@@ -1,11 +1,14 @@
 #!/bin/bash
-rm -f $(hostname).txt
+
+cd `dirname $0`
+
+make strassen
 
 i=0
 
-while [ -f $(hostname)$i.txt ]
+while [ -f data$(hostname)$i.txt ]
 do
 	i=$(($i+1))
 done
 
-./test_strassen.sh > $(hostname)$i.txt&
+./test_strassen.sh > data$(hostname)$i.txt&
