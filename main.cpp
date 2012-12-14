@@ -5,7 +5,6 @@
 #include"strassen.h"
 #include"matrixio.h"
 #include"naive.h"
-#include CONST
 
 int main (int argn, char** argv)
 {

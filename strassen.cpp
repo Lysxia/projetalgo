@@ -2,7 +2,6 @@
 #include<stdio.h>
 #include"strassen.h"
 #include"matrixio.h"
-#include"const.h"
 
 #define min(a,b) (a <= b ? a : b)
 #define max(a,b) (a >= b ? a : b)
