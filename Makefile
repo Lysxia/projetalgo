@@ -1,20 +1,26 @@
 OBJ= matrixio.o naive.o strassen.o
+# Variables dépendant des cibles
+strassen1: CFLAGS=-D PRINT=false -D MULT_NAIVE=true -D OPTIM=1 -D OPTIM2=1\
+	-D OPTIM3=1 -D STOP=50 -O2
+strassen2: CFLAGS=-D PRINT=false -D MULT_NAIVE=false -D OPTIM=1 -D OPTIM2=1\
+	-D OPTIM3=2 -D STOP=50 -O2
+
+strassen1: EXEC=strassen1
+strassen2: EXEC=strassen2
+
+
+
+# Strassen1 et 2 ne servent qu'à définir des variables particulières
+strassen1: strassen
+strassen2: strassen
+
 
 strassen: $(OBJ) main.o
-	g++ -O2 const.h $(OBJ) main.o -o strassen
-	
+	g++ $(CFLAGS) $(OBJ) main.o -o $(EXEC)
 
-strassen1: const1.h $(OBJ) main.o
-	cp const1.h const.h
-	rm -f const.h
-
-strassen2: const2.h $(OBJ) main.o
-	cp const2.h const.h
-	g++ -O2 const.h $(OBJ) main.o -o strassen2
-	rm -f const.h
 
 %.o: %.cpp %.h
-	g++ -O2 $< -c
+	g++ $(CFLAGS) $< -c
 
 test: test.txt
 	./strassen < test.txt
@@ -42,6 +48,3 @@ paren:
 # Général
 clean:
 	rm -f *\~ *.o *.gch
-
-all:
-	g++ -O2 strassen.cpp -o strassen

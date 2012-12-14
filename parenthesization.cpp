@@ -12,8 +12,8 @@ typedef uint32_t cost_t;
 
 
 // Tableau d'"op_tree" dans lequel on va préallouer tout l'arbre : TODO : cleaner en sortie
-op_tree_t * op_tree = 0;
-int next_free_node = 0; // Indique le prochain noeud non utilisé, pour ce même arbre
+static op_tree_t * op_tree = 0;
+static int next_free_node = 0; // Indique le prochain noeud non utilisé, pour ce même arbre
 
 
 cost_t get_cost (mat_size_t m, mat_size_t n, mat_size_t o)
@@ -85,6 +85,11 @@ int /* ← TODO */ get_optimal_product (int term_c, mat_size_t * sizes)
 #undef cut
 
 
+
+void clean_tree ()
+{
+  free (op_tree);
+}
 
 // Main uniquement pour le test
 int main () 

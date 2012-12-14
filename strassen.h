@@ -1,7 +1,6 @@
 #ifndef STRASSEN_H
 #define STRASSEN_H
 #include"matrixio.h"
-#include"const.h" 
 
 #define ENDREC(m,n,p) m<=STOP || n<=STOP || p<=STOP
 
