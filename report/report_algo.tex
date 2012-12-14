@@ -1,0 +1,133 @@
+\documentclass[a4paper]{article}
+
+\usepackage[french]{babel}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{fullpage}
+\usepackage{pgf}
+\usepackage{tikz}
+
+\begin{document}
+
+\title{Projet de programmation et Algorithmique}
+\author{Antoine Voizard, Li-yao Xia}
+\date{\today}
+
+\maketitle
+%\normalsize
+
+\section{Composition du projet}
+
+Le projet a été écrit en C++ pour nous permettre d'utiliser les
+templates et déclarations dans les boucles {\bf for}
+(possible en C99) ont été utilisées. Nous avons tenté de
+rester le plus près possible du C.
+
+\subsection{Fichiers source}
+
+\begin{itemize}
+  \item {\it main.cpp .h} ;
+  \item {\it matrixio.cpp .h} : lecture et affichage de matrices ;
+  \item {\it naive.cpp .h} : implémentation de la multiplication naive
+  de matrices en $O(m \cdot n \cdot p)$ ;
+  \item {\it strassen.cpp .h} : implémentation(s) de l'algorithme de
+  Strassen ; (les tentatives d'optimisation ont été conservées)
+  \item {\it parenthesization.cpp .h} : implémentation du parenthésage
+  optimal.
+\end{itemize}
+
+\subsection{Fichiers auxiliaires}
+
+\begin{itemize}
+  \item {\it Makefile} ;
+  \item {\it randmatrices.c} : générateur de matrices pseudo-aléatoires,
+  graine laissée par défaut car l'algorithme de Strassen n'est pas
+  influencé par les valeurs des coefficients.
+\end{itemize}
+
+\section{Algorithme de Strassen}
+
+Ce qui suit sera présenté le mardi 18 décembre 2012.
+
+L'algorithme a été implémenté sans difficultés, en prenant quelques
+libertés sur certains points.
+
+\subsection{Représentation des données}
+
+Les matrices sont représentées de manière la plus compacte possible :
+une matrice $A=(a_{i,j})_{0 \leq i < m, 0 \leq j < n}$ $m \times n$ est
+un tableau {\bf A} d'{\bf int} de taille $m \cdot n$,
+la case $a_{i,j}$ correspondant à la case {\bf A[i*n+j]}.
+
+Pour éviter de recopier les données, on définit une représentation en
+sous-matrices :
+une sous-matrice
+$M = (m_{i',j'})_{0 \leq i' < m_0, 0 \leq j' < n_0} =
+(a_{i_0+i',j_0+j'})_{i',j'}$
+de $A$ est représentée par la donnée de :
+
+\begin{itemize}
+  \item le pointeur {\bf A+i0*n+j0} ;
+  \item les tailles {\bf m0}, {\bf n0} ;
+  \item la largeur de {\bf A}, {\bf n}.
+\end{itemize}
+
+\subsection{Détails d'implémentation}
+
+La fonction
+
+\begin{verbatim}
+ int* strassen(int* A, int* B, int m, int n, int p);
+\end{verbatim}
+
+prend en argument deux matrices {\bf A}, {\bf B} de tailles {\bf m*n} et
+{\bf n*p} et renvoie un pointeur sur une matrice de taille {\bf m*p}.
+
+Elle fait appel à une (sous-)fonction
+
+\begin{verbatim}
+  int* _strassen(int* A, int* B, int* C,
+                 int m, int n, int p,
+                 int width_A, int width_B, int width_C);
+\end{verbatim}
+
+prend en argument trois {\it sous-matrices} et calcule le produit
+$A \cdot B$ dans {\bf C} qui devra être déjà allouée avant d'appeler
+{\bf \_strassen}.
+
+Une fonction {\bf \_add} avec des conventions d'appel similaires
+est aussi utilisée.
+
+Dans la première version, on arrête l'algorithme quand une dimension
+vaut 1.
+
+On alloue trois matrices de tailles {\bf M}:$m \cdot n$,
+{\bf N}:$n \cdot p$, {\bf X}:$m \cdot p$
+pour contenir les résultats intermédiaires.
+
+Les produits $X4$, $X5$, $X6$, $X7$ sont calculés directement dans les
+sous-matrices $P21$, $P12$, $P22$, $P11$, ce qui est permis grâce
+à la convention utilisée pour {\bf \_strassen}.
+
+Dans le cas de dimension(s) impaires, on n'ajoute pas de ligne/colonne
+mais on a trouvé une formule générale pour calculer les 7 produits.
+(à expliciter dans la présentation)
+
+\subsection{Tentatives d'optimisation}
+
+Nous avons essayé d'utiliser l'arithmétique des pointeurs dans la
+multiplication naive qui termine la récursion de {\bf \_strassen}
+mais cela ralentit le programme.
+
+L'autre optimisation, qui est concluante, est d'arrêter la récursion
+plus tôt : on utilise la multiplication naive 
+quand la plus petite dimension est inférieure à une taille
+$s$. L'optimum trouvé est environ $s=50$.
+
+Cette modification a divisé le temps de calcul
+par un facteur entre $5$ et $10$.
+
+\section{Parenthésage optimal}
+
+\end{document}
+
