@@ -1,7 +1,9 @@
 #ifndef MATRIXIO_H
 #define MATRIXIO_H
 
-int * read_matrix(int*,int*);
+int* read_matrix(int*,int*);
+int** read_matrices(int**,int*);
+
 void print_matrix(int*,int,int);
 void print_paren(int*,int*,int);
 

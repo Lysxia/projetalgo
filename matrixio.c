@@ -20,6 +20,27 @@ int* read_matrix (int* m, int* n)
   return r;
 }
 
+int** read_matrices (int** t, int* n_mat)
+{
+        scanf("%d ", n_mat);
+	int _n;
+	int m=malloc(n_mat*sizeof(int*));
+	int s=malloc((n_mat+1)*sizeof(int));
+	for (i=0 ; i<n_mat ; i++)
+	{
+	  m[i]=read_matrix(s+i,s+i+1);
+	  if (i>0&&_n!=s[i])
+	  {
+	      printf("Matrix sizes not compatible :");
+	      printf("%ux%u, %ux%u\n",s[i-1],_n,s[i],s[i+1]);
+	      return 0;
+	  }
+	  _n=s[i+1];
+	}
+	*t=s;
+	return m;
+}
+
 void print_matrix (int* A, int m, int n)
 {
     int i;
@@ -47,7 +68,11 @@ void print_paren(int* tree, int* s, int n)
 
 void print_rand(int n_mat, int min, int max)
 {
-    
+    int *s, i;
+    int **m=randmatrices(n_mat,&s,min,max);
+    for (i=0 ; i<n_mat ; i++)
+	print_matrix(m[i],s[i],s[i+1]);
+    return;
 }
 
 
