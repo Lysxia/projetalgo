@@ -6,6 +6,39 @@
 #include "matrixio.h"
 
 
+int main (int argc, char ** argv)
+{
+  int mat_count;
+  int **matrices;
+  int *sizes;
+  int *result;
+
+  if (argc==1)
+    matrices = read_matrices (&sizes, &mat_count);
+  else if (argc==2)
+  {
+      FILE *f;
+      if (NULL==(f=fopen(argv[1],"r")))
+      {
+	  printf("Failed to open file '%s'\n",argv[1]);
+	  return 1;
+      }
+      matrices = fread_matrices (f,&sizes,&mat_count);
+  }
+
+  if (matrices == NULL)
+  {
+    printf("Error while reading matrices...\n");
+    return 1;
+  }
+
+  result = naive_product (matrices, sizes, mat_count);
+
+  print_matrix (result, sizes[0], sizes[mat_count]);
+  
+  return 0;
+}
+
 // Cette fonction ne libère aucune mémoire qui lui passée
 // (à part lescalculs intermediaires)
 // Il faut libérer son résultat une fois fini
@@ -33,27 +66,3 @@ int* naive_product (int** matrices, int * sizes, int term_count)
 
   return cur_product; 
 }
-
-
-int main (int argc, char ** argv)
-{
-  int mat_count = -1;
-  int ** matrices = NULL;
-  int * sizes = NULL;
-  int * result = NULL;
-
-  matrices = read_matrices (&sizes, &mat_count);
-
-  if (matrices == NULL || sizes == NULL)
-  {
-    printf("Error while reading matrices...\n");
-    return 1;
-  }
-
-  result = naive_product (matrices, sizes, mat_count);
-
-  print_matrix (result, sizes[0], sizes[mat_count]);
-  
-  return 0;
-}
-

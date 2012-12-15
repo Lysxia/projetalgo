@@ -28,7 +28,7 @@ int** read_matrices (int** t, int* n_mat)
 	int *s=malloc((*n_mat+1)*sizeof(int));
         int i;
         
-	if (m==NULL || s==NULL)
+	if (m==NULL || s==NULL)
 	    return NULL;
 
 	for (i=0 ; i<(*n_mat) ; i++)

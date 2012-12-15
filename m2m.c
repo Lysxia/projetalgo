@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <time.h>
 
-#include "main.h"
+#include "m2m.h"
 #include "strassen.h"
 #include "matrixio.h"
 #include "naive_mult.h"

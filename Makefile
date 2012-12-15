@@ -6,19 +6,24 @@ PAR=parenthesization.c
 PHD=parenthesization.h
 EXECSTR=strassen
 EXECLPD=lpd
-CFLAGS=-D MULT_NAIVE=1 -O2 -Wno-unused-result
-COPTFLAG=-D MULT_NAIVE=0 -D OSTRASSEN -D STOP=50 -O2 -Wno-unused-result
+CDEFFLAGS=-D MULT_NAIVE=1 -Wno-unused-result
+CFLAGS=$(CDEFFLAGS)
+COPTFLAGS=-D MULT_NAIVE=0 -D OSTRASSEN -D STOP=50 -O2 -Wno-unused-result
 
+default: strassen lpd naive
 
 # Variables dépendant des cibles
 strassen2: CFLAGS=$(COPTFLAGS)
+strassenp: CFLAGS=$(CDEFFLAGS) -D PRINT
 
 strassen1: EXECSTR=strassen1
 strassen2: EXECSTR=strassen2
+strassenp: EXECSTR=strassenp
 
 # Strassen1 et 2 ne servent qu'à définir des variables particulières
 strassen1: strassen
 strassen2: strassen
+strassenp: strassen
 
 # lpd:longproduct, effectue le produit de n matrices
 lpd1: EXECLPD=lpd1
@@ -29,8 +34,8 @@ lpd2: lpd
 
 # ____.:Build:.____
 # Programme principal
-strassen: $(SRC) $(HDR) main.c main.h
-	$(CC) $(CFLAGS) $(SRC) main.c -o $(EXECSTR)
+strassen: $(SRC) $(HDR) m2m.c m2m.h
+	$(CC) $(CFLAGS) $(SRC) m2m.c -o $(EXECSTR)
 
 # Multiplication d'une suite de matrices
 lpd: $(SRC) $(HDR) $(PAR) $(PHD) multiply.c multiply.h longproduct.c longproduct.h
