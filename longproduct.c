@@ -16,7 +16,7 @@ int main(int argc, char** argv)
     {
         scanf("%d ", &n_mat);
 	m=malloc(n_mat*sizeof(int*));
-	s=malloc(n_mat*sizeof(int));
+	s=malloc((n_mat+1)*sizeof(int));
 	for (i=0 ; i<n_mat ; i++)
 	{
 	  m[i]=read_matrix(s+i,s+i+1);
@@ -43,7 +43,7 @@ int main(int argc, char** argv)
     int *order=get_optimal_product(n_mat,s);
     int *product=orderedmult(m,s,order,n_mat);
 
-    print_paren(order,n_mat-1);
+    print_paren(order,s,n_mat-1);
     print_matrix(product,s[0],s[n_mat]);
 
     return 0;
