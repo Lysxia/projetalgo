@@ -71,8 +71,8 @@ fmult1: fmult
 fmult2: fmult
 
 #
-demo1: EXECFM=demo1
-demo2: EXECFM=demo1
+demo1: EXECD=demo1
+demo2: EXECD=demo1
 demo2: CFLAGS=$(COPTFLAGS)
 
 demo1: demo
