@@ -64,7 +64,7 @@ lpd2: lpd
 
 #
 fmult1: EXECFM=fmult1
-fmult2: EXECFM=fmult1
+fmult2: EXECFM=fmult2
 fmult2: CFLAGS=$(COPTFLAGS)
 
 fmult1: fmult
@@ -72,7 +72,7 @@ fmult2: fmult
 
 #
 demo1: EXECD=demo1
-demo2: EXECD=demo1
+demo2: EXECD=demo2
 demo2: CFLAGS=$(COPTFLAGS)
 
 demo1: demo
