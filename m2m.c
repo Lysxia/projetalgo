@@ -13,7 +13,7 @@ int main (int argn, char** argv)
 
   int m, n, _n, o;
   int * A, * B, * C, * D;
-  float t;
+  double t;
   
   if (NULL == (A = read_matrix(&m,&n)))
   {

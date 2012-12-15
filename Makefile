@@ -2,15 +2,42 @@ CC=gcc
 # SRC/HDR : dépendances utilisées par tout le monde
 SRC=randpi.c matrixio.c naive_mult.c extracted.c strassen.c
 HDR=randpi.h matrixio.h naive_mult.h extracted.h strassen.h
-PAR=parenthesization.c
-PHD=parenthesization.h
+PAR=parenthesization.c multiply.c
+PHD=parenthesization.h multiply.h
 EXECSTR=strassen
 EXECLPD=lpd
+EXECFM=fmult
 CDEFFLAGS=-D MULT_NAIVE=1 -D REAL_COST -Wno-unused-result
 CFLAGS=$(CDEFFLAGS)
-COPTFLAGS=-D MULT_NAIVE=0 -D OSTRASSEN -D STOP=50 -O2 -Wno-unused-result
+COPTFLAGS=-D MULT_NAIVE=0 -D REAL_COST OSTRASSEN -D STOP=50 -O2 -Wno-unused-result
 
-default: strassen lpd naive
+default: rand2 strassen1 lpd1 naive fmult1 demo1
+default: strassen2 lpd2 fmult2 demo2
+
+# ____.:Build:.____
+# Programme principal
+strassen: $(SRC) $(HDR) m2m.c m2m.h
+	$(CC) $(CFLAGS) $(SRC) m2m.c -o $(EXECSTR)
+
+# Multiplication d'une suite de matrices
+lpd: $(SRC) $(HDR) $(PAR) $(PHD) longproduct.c longproduct.h
+	$(CC) $(CFLAGS) $(SRC) $(PAR) longproduct.c -o $(EXECLPD)
+
+# Multiplication d'une suite de matrices par la méthode naïve
+naive: $(SRC) $(HDR) naive.c naive.h
+	$(CC) $(CFLAGS) $(SRC) naive.c -o naive
+
+fmult: $(SRC) $(HDR) $(PAR) $(PHD) demo.h demo.c
+	$(CC) $(CFLAGS) $(SRC) $(PAR) demo.c -o $(EXECFM)
+
+demo: $(SRC) $(HDR) $(PAR) $(PHD) demo.h demo.c
+	$(CC) $(CFLAGS) -D CHECK_NAIVE $(SRC) $(PAR) demo.c -o $(EXECD)
+
+
+# Programme de génération de 2 matrices
+rand2: randmatrices.c
+	gcc randmatrices.c -o rand2
+
 
 # Variables dépendant des cibles
 strassen2: CFLAGS=$(COPTFLAGS)
@@ -31,24 +58,6 @@ lpd2: EXECLPD=lpd2 CFLAGS=$(COPTFLAGS)
 
 lpd1: lpd
 lpd2: lpd
-
-# ____.:Build:.____
-# Programme principal
-strassen: $(SRC) $(HDR) m2m.c m2m.h
-	$(CC) $(CFLAGS) $(SRC) m2m.c -o $(EXECSTR)
-
-# Multiplication d'une suite de matrices
-lpd: $(SRC) $(HDR) $(PAR) $(PHD) multiply.c multiply.h longproduct.c longproduct.h
-	$(CC) $(CFLAGS) $(SRC) $(PAR) multiply.c longproduct.c -o $(EXECLPD)
-
-# Multiplication d'une suite de matrices par la méthode naïve
-naive: $(SRC) $(HDR) naive.c naive.h
-	$(CC) $(CFLAGS) $(SRC) -std=c99 naive.c -o naive
-
-
-# Programme de génération de 2 matrices
-rand2: randmatrices.c
-	gcc randmatrices.c -o rand2
 
 
 # ____.:Tests:.____

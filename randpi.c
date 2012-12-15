@@ -13,7 +13,7 @@ int* randmatrix(int m, int n)
     return a;
 }
 
-//Rand Pi (Produit) de matrices, de tailles min à max exclus
+//Rand Pi (Produit) de matrices, de tailles min inclus à max exclus
 int** randmatrices(int n_mat, int** s, int min, int max)
 {
     if (min<1)
