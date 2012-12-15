@@ -35,8 +35,22 @@ int* naive_product (int** matrices, int * sizes, int term_count)
 int main (int argc, char ** argv)
 {
   int mat_count = -1;
+  int ** matrices = NULL;
+  int * sizes = NULL;
+  int * result = NULL;
 
-  scanf ("%d", &mat_count);
+  matrices = read_matrices (&sizes, &mat_count);
+
+  if (matrices == NULL || sizes == NULL)
+  {
+    printf("Error while reading matrices...\n");
+    return 1;
+  }
+
+  result = naive_product (matrices, sizes, mat_count);
+
+  print_matrix (result, sizes[0], sizes[mat_count]);
+  
   return 0;
 }
 
