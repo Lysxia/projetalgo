@@ -1,6 +1,10 @@
-#include<stdio.h>
-#include<stdlib.h>
-#include"matrixio.h"
+#include <stdio.h>
+#include <stdlib.h>
+
+#include "matrixio.h"
+
+
+void _print_paren(int*,int,int);
 
 
 // Fonctions de lecture et affichage, représentation brute

@@ -6,14 +6,13 @@
 #include "strassen.h"
 #include "matrixio.h"
 #include "naive_mult.h"
-#include "types.h"
 
 int main (int argn, char** argv)
 {
 
 #if 0
     int m,n;
-    mat_t M;
+    int * M;
     scanf("%d %d ", &m, &n);
 
     if (0 == (M = read_matrix(m,n)))
@@ -28,7 +27,7 @@ int main (int argn, char** argv)
 #if 1
 
   int m, n, _n, o;
-  mat_t A, B, C, D;
+  int * A, * B, * C, * D;
   float t;
   
   if (0 == (A = read_matrix(&m,&n)))
@@ -98,7 +97,7 @@ int main (int argn, char** argv)
 #endif
 
 #if 0
-  mat_t A = 0, B = 0, C;
+  int * A = 0, * B = 0, * C;
   int m, n, o;
 
   scanf("%d %d %d ", &m, &n, &o);
