@@ -7,9 +7,10 @@ PHD=parenthesization.h multiply.h
 EXECSTR=strassen
 EXECLPD=lpd
 EXECFM=fmult
-CDEFFLAGS=-D MULT_NAIVE=1 -D REAL_COST -Wno-unused-result
+EXECD=demo
+CDEFFLAGS=-D MULT_NAIVE=1 -D REAL_COST -Wno-unused-result -O2
 CFLAGS=$(CDEFFLAGS)
-COPTFLAGS=-D MULT_NAIVE=0 -D REAL_COST OSTRASSEN -D STOP=50 -O2 -Wno-unused-result
+COPTFLAGS=-D MULT_NAIVE=0 -D REAL_COST -D OSTRASSEN -D STOP=50 -O2 -Wno-unused-result
 
 default: rand2 strassen1 lpd1 naive fmult1 demo1
 default: strassen2 lpd2 fmult2 demo2
@@ -43,6 +44,7 @@ rand2: randmatrices.c
 strassen2: CFLAGS=$(COPTFLAGS)
 strassenp: CFLAGS=$(CDEFFLAGS) -D PRINT
 
+
 strassen1: EXECSTR=strassen1
 strassen2: EXECSTR=strassen2
 strassenp: EXECSTR=strassenp
@@ -54,10 +56,27 @@ strassenp: strassen
 
 # lpd:longproduct, effectue le produit de n matrices
 lpd1: EXECLPD=lpd1
-lpd2: EXECLPD=lpd2 CFLAGS=$(COPTFLAGS)
+lpd2: EXECLPD=lpd2
+lpd2: CFLAGS=$(COPTFLAGS)
 
 lpd1: lpd
 lpd2: lpd
+
+#
+fmult1: EXECFM=fmult1
+fmult2: EXECFM=fmult1
+fmult2: CFLAGS=$(COPTFLAGS)
+
+fmult1: fmult
+fmult2: fmult
+
+#
+demo1: EXECFM=demo1
+demo2: EXECFM=demo1
+demo2: CFLAGS=$(COPTFLAGS)
+
+demo1: demo
+demo2: demo
 
 
 # ____.:Tests:.____
