@@ -5,24 +5,32 @@
 
 int main(int argc, char** argv)
 {
-    int n_mat, **m, a, b;
-    mat_size_t *s;
-/*
+    int n_mat; // Nb matrices
+    int **m;   // matrix list
+    int *s;    // matrix size list
+    int _n, i;
+
     if (argc==1)
     {
-        scanf("%d ", n_mat)
+        scanf("%d ", &n_mat);
+	m=malloc(n_mat*sizeof(int*));
+	s=malloc(n_mat*sizeof(int));
+	for (i=0 ; i<n_mat ; i++)
+	{
+	  m[i]=read_matrix(s+i,s+i+1);
+	  if (a!=s[i])
+	}
     }
     else if (argc==2)
     {
+
     }
     else
     {
 	printf("Too many arguments.");
 	return 1;
-    }*/
-    mat_size_t k;
-    scanf("%u",&k);
-    printf("%u",k);
+    }
+
     return 0;
 }
 

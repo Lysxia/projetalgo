@@ -9,21 +9,6 @@
 
 int main (int argn, char** argv)
 {
-
-#if 0
-    int m,n;
-    int * M;
-    scanf("%d %d ", &m, &n);
-
-    if (0 == (M = read_matrix(m,n)))
-    {
-	printf("Could not read matrix.\n");
-	return 1;
-    }
-
-    print_matrix(M, m, n);
-#endif
-
 #if 1
 
   int m, n, _n, o;
@@ -94,45 +79,6 @@ int main (int argn, char** argv)
   free(C);
   free(D);
   A=B=C=D=0;
-#endif
-
-#if 0
-  int * A = 0, * B = 0, * C;
-  int m, n, o;
-
-  scanf("%d %d %d ", &m, &n, &o);
-  A = read_matrix(m,n);
-  B = read_matrix(n,o);
-  C = mult(A,B,m,n,o);
-
-  print_matrix(A,m,n);
-  print_matrix(B,n,o);
-  print_matrix(C,m,o);
-#endif
-
-#if 0
-  while (scanf ("%d %d", &n, &o) != eof)
-  {
-    if (A == 0) 
-    {
-      A = read_matrix (n, o);
-      print_matrix(A, n, o);
-      m = n;
-      n = o;
-      continue;
-    }
-  
-    B = read_matrix (n, o);
-    C = mult (A, B, m, n, o);
-
-    print_matrix (B, n, o); 
-    
-    print_matrix (C, m, o);
-    free (A);
-    free (B);
-    A = C;
-    n = o;
-  }
 #endif
 
   return 0;
