@@ -18,8 +18,13 @@ int main(int argc, char** argv)
     }
     else if (argc==2)
     {
-        printf("Not implemented. Too many arguments.\n");
-	return 1;
+	FILE *f=fopen(argv[1],"r");
+	if (f==NULL)
+	{
+	    printf("Failed to open file '%s'",argv[1]);
+	    return 1;
+	}
+	m=fread_matrices(f,&s,&n_mat);
     }
     else
     {
