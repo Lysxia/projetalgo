@@ -10,11 +10,11 @@ void _print_paren(int*,int*,int,int);
 int* read_matrix (int* m, int* n)
 {
   int *r, i;
-  scanf("%u %u",m,n);
-  if (0 == (r=malloc (*m**n*sizeof(int))))
+  scanf("%d %d",m,n);
+  if (0 == (r=malloc ((*m)*(*n)*sizeof(int))))
       return NULL;
 
-  for (i = 0; i < *m * *n; i++)
+  for (i = 0 ; i < (*m)*(*n) ; i++)
     scanf("%d ", r + i);
   
   return r;
@@ -28,13 +28,16 @@ int** read_matrices (int** t, int* n_mat)
 	int *s=malloc((*n_mat+1)*sizeof(int));
         int i;
         
-	for (i=0 ; i<*n_mat ; i++)
+	if (m==NULL || s==NULL)
+	    return NULL;
+
+	for (i=0 ; i<(*n_mat) ; i++)
 	{
 	  m[i]=read_matrix(s+i,s+i+1);
 	  if (i>0&&_n!=s[i])
 	  {
 	      printf("Matrix sizes not compatible :");
-	      printf("%ux%u, %ux%u\n",s[i-1],_n,s[i],s[i+1]);
+	      printf("%dx%d, %dx%d\n",s[i-1],_n,s[i],s[i+1]);
 	      return NULL;
 	  }
 	  _n=s[i+1];
@@ -46,7 +49,7 @@ int** read_matrices (int** t, int* n_mat)
 int* fread_matrix (FILE* f, int* m, int* n)
 {
   int *r, i;
-  fscanf(f,"%u %u",m,n);
+  fscanf(f,"%d %d",m,n);
   if (0 == (r=malloc (*m**n*sizeof(int))))
       return NULL;
 
@@ -70,7 +73,7 @@ int** fread_matrices (FILE* f, int** t, int* n_mat)
 	  if (i>0&&_n!=s[i])
 	  {
 	      printf("Matrix sizes not compatible :");
-	      printf("%ux%u, %ux%u\n",s[i-1],_n,s[i],s[i+1]);
+	      printf("%dx%d, %dx%d\n",s[i-1],_n,s[i],s[i+1]);
 	      return NULL;
 	  }
 	  _n=s[i+1];
@@ -82,7 +85,7 @@ int** fread_matrices (FILE* f, int** t, int* n_mat)
 void print_matrix (int* A, int m, int n)
 {
     int i;
-  printf ("Matrix %u %u :\n", m, n);
+  printf ("Matrix %d %d :\n", m, n);
 
   for (i = 0; i < m * n; i++)
     printf((i + 1) % n ? "%d " : "%d\n", A[i]);

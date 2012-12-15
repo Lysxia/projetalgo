@@ -15,13 +15,13 @@ int main (int argn, char** argv)
   int * A, * B, * C, * D;
   float t;
   
-  if (0 == (A = read_matrix(&m,&n)))
+  if (NULL == (A = read_matrix(&m,&n)))
   {
       printf("Could not read 1st matrix.\n");
       return 1;
   }
 
-  if (0 == (B = read_matrix(&_n,&o)))
+  if (NULL == (B = read_matrix(&_n,&o)))
   {
       printf("Could not read 2nd matrix.\n");
       return 1;
@@ -38,7 +38,7 @@ int main (int argn, char** argv)
 #endif
 
   t=clock();
-  if (0 == (C = strassen(A,B,m,n,o)))
+  if (NULL == (C = strassen(A,B,m,n,o)))
   {
       printf("Multiplication failed.\n");
       return 1;
@@ -57,7 +57,7 @@ int main (int argn, char** argv)
 
 #ifdef MULT_NAIVE
   t=clock();
-  if (0 == (D = naive_mult(A,B,m,n,o)))
+  if (NULL == (D = naive_mult(A,B,m,n,o)))
   { 
       printf("Multiplication failed.\n");
       return 2;

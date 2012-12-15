@@ -7,7 +7,7 @@
 
 
 // Cette fonction ne libère aucune mémoire qui lui passée
-// (à part les valculs intermediaires)
+// (à part lescalculs intermediaires)
 // Il faut libérer son résultat une fois fini
 int* naive_product (int** matrices, int * sizes, int term_count)
 {
@@ -26,6 +26,9 @@ int* naive_product (int** matrices, int * sizes, int term_count)
     if (cur > 1) // Il ne faut pas libérer la toute première matrice 
       // (terme du produit)
       free (previous_term);
+
+    if (cur_product==NULL)
+	return NULL;
   }
 
   return cur_product; 
