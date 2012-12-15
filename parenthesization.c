@@ -38,7 +38,7 @@ int* get_optimal_product (int term_c, mat_size_t* sizes)
     for (start = 0; start < term_c-sz; start++)
     {
       cost_t min_cost = UINT64_MAX;
-      int cut, min_cut = -1;
+      int cut, cur_cost, min_cut = -1;
       
       for (cut = 1, cur_cost = 0; cut <= sz; cut++)
       {
