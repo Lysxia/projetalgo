@@ -7,6 +7,7 @@ PHD=parenthesization.h multiply.h
 EXECSTR=strassen
 EXECLPD=lpd
 EXECFM=fmult
+EXECD=demo
 CDEFFLAGS=-D MULT_NAIVE=1 -D REAL_COST -Wno-unused-result
 CFLAGS=$(CDEFFLAGS)
 COPTFLAGS=-D MULT_NAIVE=0 -D REAL_COST OSTRASSEN -D STOP=50 -O2 -Wno-unused-result
