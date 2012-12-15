@@ -3,9 +3,7 @@
 
 #include "matrixio.h"
 
-
 void _print_paren(int*,int,int);
-
 
 // Fonctions de lecture et affichage, représentation brute
 int* read_matrix (int* m, int* n)

@@ -18,7 +18,7 @@ static int *op_cuts = 0;
 static int next_free_node = 0; // Indique le prochain noeud non utilisé, pour ce même arbre
 
 
-int* get_optimal_product (int term_c, mat_size_t* sizes)
+int* get_optimal_product (int term_c, int* sizes)
 {
   //Le dernier élement du tableau sizes correspond à la deuxième
   //dimension de la dernière matrice
@@ -90,7 +90,7 @@ void _bt (int* c, int term_c, int begin, int end)
 #undef cut
 
 
-cost_t get_cost (mat_size_t m, mat_size_t n, mat_size_t o)
+cost_t get_cost (int m, int n, int o)
 {
 #ifdef REAL_COST
   //log2(v) in few op
@@ -110,7 +110,7 @@ cost_t get_cost (mat_size_t m, mat_size_t n, mat_size_t o)
   r |= (v >> 1);
 
   //cout de Strassen
-  return pow7(v)*crazy(m,v)*crazy(n,v)*crazy(o,v);
+  return pow7(v)*(cost_t)crazy(m,v)*(cost_t)crazy(n,v)*(cost_t)crazy(o,v);
 #else
   return m * n * o;
 #endif
@@ -123,13 +123,13 @@ void clean_tree ()
 }
 
 
-int pow7(int n)
+cost_t pow7(int n)
 {
   if (n==0)
     return 1;
   else
   {
-    int k;
+    cost_t k;
     k=pow7(n>>1);
     return (n&1)?k*k*7:k*k;
   }
