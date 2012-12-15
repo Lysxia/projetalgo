@@ -1,6 +1,6 @@
 CC=gcc
-SRC= matrixio.c naive.c extracted.c strassen.c
-HDR= matrixio.h naive.h extracted.h strassen.h
+SRC= matrixio.c naive_mult.c extracted.c strassen.c
+HDR= matrixio.h naive_mult.h extracted.h strassen.h
 EXEC=strassen
 CFLAGS=-D MULT_NAIVE=1 -O2
 
