@@ -33,8 +33,8 @@ strassen: $(SRC) $(HDR) main.c main.h
 	$(CC) $(CFLAGS) $(SRC) main.c -o $(EXECSTR)
 
 # Multiplication d'une suite de matrices
-lpd: $(SRC) $(HDR) $(PAR) $(PHD) longproduct.c longproduct.h
-	$(CC) $(CFLAGS) $(SRC) $(PAR) longproduct.c -o $(EXECLPD)
+lpd: $(SRC) $(HDR) $(PAR) $(PHD) multiply.c multiply.h longproduct.c longproduct.h
+	$(CC) $(CFLAGS) $(SRC) $(PAR) multiply.c longproduct.c -o $(EXECLPD)
 
 # Multiplication d'une suite de matrices par la méthode naïve
 naive: $(SRC) $(HDR) naive.c naive.h

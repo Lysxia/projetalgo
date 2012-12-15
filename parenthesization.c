@@ -69,7 +69,7 @@ int* get_optimal_product (int term_c, int* sizes)
 
 void build_tree (int* result_array, int term_c)
 {
-  _bt (result_array, term_c, 0, term_c - 1); 
+  _bt (result_array, term_c, 0, term_c-1); 
 }
 
 void _bt (int* c, int term_c, int begin, int end)
@@ -81,8 +81,8 @@ void _bt (int* c, int term_c, int begin, int end)
     
     op_cuts [next_free_node++] = cur_cut; // On indice les coupures à partir de 1
     
-    _bt (c, term_c, begin, begin+cur_cut);
-    _bt (c, term_c, begin+cur_cut+1, end);
+    _bt (c, term_c, begin, begin+cur_cut-1);
+    _bt (c, term_c, begin+cur_cut, end);
   }
 }
 
