@@ -8,24 +8,27 @@
 
 // Cette fonction ne libère aucune mémoire qui lui passée
 // (à part les valculs intermediaires)
+// Il faut libérer son résultat une fois fini
 int* naive_product (int** matrices, int * sizes, int term_count)
 {
   int cur;
   int * previous_term, * cur_product;
 
-  previous_term = matrices[0];
+  cur_product = matrices[0];
 
   for (cur = 1; cur < term_count; cur++)
   {
+    previous_term = cur_product;
     
-    cur_product = // produit
+    cur_product = naive_mult (previous_term, matrices[cur], sizes[0], 
+                              sizes[cur], sizes[cur+1]);
   
-    if (i > 1) // Il ne faut pas libérer la toute première matrice 
+    if (cur > 1) // Il ne faut pas libérer la toute première matrice 
       // (terme du produit)
-      ; // TODO : freer le dernier termporaire
+      free (previous_term);
   }
 
-  return NULL; // TODO
+  return cur_product; 
 }
 
 

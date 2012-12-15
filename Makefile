@@ -38,7 +38,7 @@ lpd: $(SRC) $(HDR) $(PAR) $(PHD) longproduct.c longproduct.h
 
 # Multiplication d'une suite de matrices par la méthode naïve
 naive: $(SRC) $(HDR) naive.c naive.h
-	$(CC) $(CFLAGS) -std=c99 naive.c -o naive
+	$(CC) $(CFLAGS) $(SRC) -std=c99 naive.c -o naive
 
 
 # Programme de génération de 2 matrices
