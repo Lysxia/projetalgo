@@ -18,22 +18,33 @@
 
 \section{Composition du projet}
 
-Le projet a été écrit en C++ pour nous permettre d'utiliser les
-templates et déclarations dans les boucles {\bf for}
-(possible en C99) ont été utilisées. Nous avons tenté de
-rester le plus près possible du C.
+Initialement écrit en C++ pour les templates, le projet est maintenant
+écrit en C.
 
 \subsection{Fichiers source}
 
 \begin{itemize}
-  \item {\it main.cpp .h} ;
-  \item {\it matrixio.cpp .h} : lecture et affichage de matrices ;
-  \item {\it naive.cpp .h} : implémentation de la multiplication naive
-  de matrices en $O(m \cdot n \cdot p)$ ;
-  \item {\it strassen.cpp .h} : implémentation(s) de l'algorithme de
-  Strassen ; (les tentatives d'optimisation ont été conservées)
-  \item {\it parenthesization.cpp .h} : implémentation du parenthésage
-  optimal.
+  \item {\it randpi.c .h} : générateur de matrices pseudo-aléatoires ;
+  \item {\it matrixio.c .h} : lecture et affichage de matrices ;
+  \item {\it naïve\_mult.c .h} : implémentation de la multiplication naïve
+  de matrices en $O(m \cdot n \cdot p)$, avec parenthésage naïf ;
+  \item {\it extracted.c .h} : fonctions auxiliaires utilisées par
+  la fonction {\bf strassen} ;
+  \item {\it strassen.c .h} : implémentation(s) de l'algorithme de
+  Strassen ; (avec éventuellement une optimisation)
+  \item {\it parenthesization.c .h} : implémentation de l'algorithme de
+  parenthésage optimal par programmation dynamique.
+  \item {\it multiply.c .h} : multiplication rapide d'une suite de
+  matrices en utilisant les deux algorithmes.
+  \item {\it m2m.c .h} : programme. Multiplie deux matrices avec
+  l'algorithme de Strassen.
+  \item {\it naïve.c .h} : programme. Multiplie une suite de matrices
+  de manière naïve.
+  \item {\it longproduct.c .h} : programme. Multiplie une suite de
+  matrices avec algorithme de Strassen pour un parenthésage optimal.
+  \item {\it demo.c .h} : programme de démonstration. Multiplie des
+  matrices générées pseudo-aléatoirement et compare les approches
+  optimisée et naïve.
 \end{itemize}
 
 \subsection{Fichiers auxiliaires}
@@ -42,7 +53,21 @@ rester le plus près possible du C.
   \item {\it Makefile} ;
   \item {\it randmatrices.c} : générateur de matrices pseudo-aléatoires,
   graine laissée par défaut car l'algorithme de Strassen n'est pas
-  influencé par les valeurs des coefficients.
+  influencé par les valeurs des coefficients ;
+
+\subsection{Usage, cibles de la commande make}
+
+Certains exécutables sont produits en deux versions : la version 1
+arrête la récursion de l'algorithme de Strassen
+quand une dimension vaut 1, la version 2 arrête quand
+une dimension arrive à moins de 50.
+
+
+\begin{description}
+  \item[default (make)] génère tous les exécutables associés au projet.
+
+
+  
 \end{itemize}
 
 \section{Algorithme de Strassen}
@@ -58,6 +83,8 @@ Les matrices sont représentées de manière la plus compacte possible :
 une matrice $A=(a_{i,j})_{0 \leq i < m, 0 \leq j < n}$ $m \times n$ est
 un tableau {\bf A} d'{\bf int} de taille $m \cdot n$,
 la case $a_{i,j}$ correspondant à la case {\bf A[i*n+j]}.
+
+Les tailles des matrices sont de type {\bf unsigned int} ({\bf unsigned}).
 
 Pour éviter de recopier les données, on définit une représentation en
 sous-matrices :
@@ -116,13 +143,13 @@ mais on a trouvé une formule générale pour calculer les 7 produits.
 \subsection{Tentatives d'optimisation}
 
 Nous avons essayé d'utiliser l'arithmétique des pointeurs dans la
-multiplication naive qui termine la récursion de {\bf \_strassen}
+multiplication naïve qui termine la récursion de {\bf \_strassen}
 mais cela ralentit le programme.
 
 L'autre optimisation, qui est concluante, est d'arrêter la récursion
-plus tôt : on utilise la multiplication naive 
+plus tôt : on utilise la multiplication naïve 
 quand la plus petite dimension est inférieure à une taille
-$s$. L'optimum trouvé est environ $s=50$.
+$s$. L'optimum trouvé (par expérimentation) est environ $s=50$
 
 Cette modification a divisé le temps de calcul
 par un facteur entre $5$ et $10$.
