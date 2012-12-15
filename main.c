@@ -70,7 +70,7 @@ int main (int argn, char** argv)
   printf("Naive mult...\n");
 #endif
 
-#if MULT_NAIVE
+#ifdef MULT_NAIVE
   t=clock();
   if (0 == (D = mult(A,B,m,n,o)))
   { 
