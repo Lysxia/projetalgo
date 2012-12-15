@@ -1,6 +1,7 @@
 #include<stdlib.h>
 #include<stdio.h>
 #include"strassen.h"
+#include"extracted.h"
 #include"matrixio.h"
 
 #define min(a,b) (a <= b ? a : b)
@@ -21,15 +22,15 @@
  */
 
 
-int * mem = 0;
-int * sp = 0;
+int* mem = 0;
+int* sp = 0;
 
 /* Cette fonction recoit deux matrices dans la représentation brute */
-int * strassen(int * A, int * B, int m, int n, int o)
+int* strassen(int* A, int* B, int m, int n, int o)
 {
   /* Pour économiser des appels à malloc on alloue la mémoire
    * nécessaire d'avance pour la fonction strassen */
-  if (0 == (mem = (int*) malloc ((m*n+n*o+o*m)*sizeof(int))))
+  if (0 == (mem=malloc((m*n+n*o+o*m)*sizeof(int))))
   {
     printf("Major failure ! Memory not allocated. Bye.\n");
     return 0;
@@ -39,19 +40,19 @@ int * strassen(int * A, int * B, int m, int n, int o)
 
   int *C;
 
-  if (0 == (C = (int*) malloc (m*o*sizeof(int))))
+  if (0 == (C=malloc(m*o*sizeof(int))))
       return 0;
 
-  _strassen(A, B, C, m, n, o, n, o, o);
+  _strassen(A,B,C, m,n,o, n,o,o);
 
   return C;
  }
 
 
 // Représentation en sous-matrices
-void _strassen(int * A, int * B, int * C, 
+void _strassen(int* A, int* B, int* C,
                 // Dim des matrices
-                int m, int n, int o, 
+                int m, int n, int o,
                 // Nombre de colonnes des matrices totales
                 int width_A, int width_B, int width_C)
 {
@@ -62,46 +63,49 @@ void _strassen(int * A, int * B, int * C,
 
 #ifndef OSTRASSEN
 /* Fin quand une dim est 1 */
-  if (m <= 0 || n <= 0 || o <= 0)
+  if (m<=0 || n<=0 || o<=0)
     return;
 
   // A n'est plus qu'une matrice ligne... On multiplie à la main
-  if (m == 1)
+  if (m==1)
   {
-    for (int k = 0; k < o; k++)
+      int j,k;
+    for (k=0 ; k<o; k++)
     {
       // Initialisation
       C[k] = 0;
       
-      for (int j = 0 ; j < n ; j++)
+      for (j=0 ; j<n ; j++)
         // Note : i est implicite, il vaut 0 (une seule ligne)
-        C[k] += A[j] * B[k + j * width_B];
+        C[k] += A[j]*B[k + j*width_B];
     }
 
     return;
   }
 
   // Idem, cette fois B n'est plus qu'une matrice colonne
-  if (o == 1)
+  if (o==1)
   {
-    for (int i = 0; i < m; i++)
+      int i,j;
+    for (i=0 ; i<m ; i++)
     {
-      C[i * width_C] = 0;
+      C[i*width_C] = 0;
       
-      for (int j = 0; j < n; j++)
+      for (j=0 ; j<n ; j++)
         // Note : k est implicite (k = 0)
-        C[i * width_C] += A[j + i * width_A] * B[j * width_B];
+        C[i*width_C] += A[j + i*width_A] * B[j*width_B];
     }
 
     return;
   }
 
   // Dimension commune = 1
-  if (n == 1)
+  if (n==1)
   {
-    for (int i = 0; i < m; i++)
-      for (int k = 0; k < o; k++)
-        C[i * width_C + k] = A[i * width_A] * B[k];
+      int i,k;
+    for (i=0 ; i<m ; i++)
+      for (k=0 ; k<o ; k++)
+        C[i*width_C + k] = A[i*width_A] * B[k];
 
     return;
   }
@@ -110,11 +114,12 @@ void _strassen(int * A, int * B, int * C,
 /* Fin quand une dim est <= STOP */
   if (ENDREC(m,n,o))
   {
-     for (int i=0 ; i<m ; i++)
-	 for (int k=0 ; k<o ; k++)
+      int i,j,k;
+     for (i=0 ; i<m ; i++)
+	 for (k=0 ; k<o ; k++)
 	 {
 	     C[k+i*width_C]=0;
-	     for (int j=0 ; j<n ; j++)
+	     for (j=0 ; j<n ; j++)
 		 C[k+i*width_C]+=A[j+i*width_A]*B[k+j*width_B];
 	 }
      return;
@@ -133,7 +138,7 @@ void _strassen(int * A, int * B, int * C,
   int * M = sp;
   int * N = sp+m1*n1;
   int * X = sp+m1*n1+n1*o1;
-  :
+
   sp += m1*n1+n1*o1+m1*o1;
 
 
@@ -263,4 +268,3 @@ void _strassen(int * A, int * B, int * C,
 
   return;
 }
-
