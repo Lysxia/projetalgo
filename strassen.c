@@ -25,7 +25,7 @@ int * mem = 0;
 int * sp = 0;
 
 /* Cette fonction recoit deux matrices dans la représentation brute */
-int * strassen (int * A, int * B, int m, int n, int o)
+int * strassen(int * A, int * B, int m, int n, int o)
 {
   /* Pour économiser des appels à malloc on alloue la mémoire
    * nécessaire d'avance pour la fonction strassen */
@@ -45,21 +45,26 @@ int * strassen (int * A, int * B, int m, int n, int o)
   _strassen(A, B, C, m, n, o, n, o, o);
 
   return C;
-}
+ }
 
 
 // Représentation en sous-matrices
-void _strassen (int * A, int * B, int * C, 
+void _strassen(int * A, int * B, int * C, 
                 // Dim des matrices
                 int m, int n, int o, 
                 // Nombre de colonnes des matrices totales
                 int width_A, int width_B, int width_C)
 {
-#if OPTIM3==1
+/* Optimisations
+ * - Fin de récursion par une multiplication naive
+ *  par defaut : fin quand une dimension est 1
+ *  OSTRASSEN : fin quand une dim est <= STOP (ENDREC(m,n,o)) */
+
+#ifndef OSTRASSEN
+/* Fin quand une dim est 1 */
   if (m <= 0 || n <= 0 || o <= 0)
     return;
 
-#if OPTIM==1
   // A n'est plus qu'une matrice ligne... On multiplie à la main
   if (m == 1)
   {
@@ -73,7 +78,6 @@ void _strassen (int * A, int * B, int * C,
         C[k] += A[j] * B[k + j * width_B];
     }
 
-    //print_extr(C,m,o,width_C);
     return;
   }
 
@@ -89,7 +93,6 @@ void _strassen (int * A, int * B, int * C,
         C[i * width_C] += A[j + i * width_A] * B[j * width_B];
     }
 
-    //print_extr(C,m,o,width_C);
     return;
   }
 
@@ -100,47 +103,11 @@ void _strassen (int * A, int * B, int * C,
       for (int k = 0; k < o; k++)
         C[i * width_C + k] = A[i * width_A] * B[k];
 
-    //print_extr(C,m,o,width_C);
     return;
   }
 
-  // optimisation non conclusive
-#elif OPTIM==2
-  if (m==1)
-  {
-      int *nA=A+n, *oC=C+o;
-      for (int *kc=C, *kb=B ; kc<oC ; kc++, kb++)
-      {
-	  *kc=0;
-	  for (int *jb=kb, *ja=A ; ja<nA ; jb+=width_B, ja++)
-	      *kc += *ja* *jb;
-      }
-      return;
-  }
-
-  if (o==1)
-  {
-      int *mA=A+m*width_A, *nB=B+n*width_B;
-      for (int *ia=A, *ic=C ; ia<mA ; ia+=width_A, ic+=width_C)
-      {
-	  *ic=0;
-	  for (int *ja=ia, *jb=B ; jb<nB ; jb+=width_B, ja++)
-	      *ic += *ja* *jb;
-      }
-      return;
-  }
-
-  if (n==1)
-  {
-      int *mA=A+m*width_A, *oB=B+o;
-      for (int *ia=A, *ic=C ; ia<mA ; ia+=width_A, ic+=width_C)
-	  for (int *kb=B, *kc=ic ; kb<oB ; kb++, kc++)
-	      *kc = *ia* *kb;
-      return;
-  }
-#endif
-
-#elif OPTIM3==2
+#else
+/* Fin quand une dim est <= STOP */
   if (ENDREC(m,n,o))
   {
      for (int i=0 ; i<m ; i++)
@@ -166,7 +133,7 @@ void _strassen (int * A, int * B, int * C,
   int * M = sp;
   int * N = sp+m1*n1;
   int * X = sp+m1*n1+n1*o1;
-
+  :
   sp += m1*n1+n1*o1+m1*o1;
 
 
@@ -188,13 +155,11 @@ void _strassen (int * A, int * B, int * C,
   int * B22 = B + n1 * width_B + o1;
 
 
-  // TODO : script-générer les calculs suivants
-  
   // Calcul de X7
     // M <- A12 - A22
-  _add<true, true> (A12, A22, M, m1, n2, m2, n2, width_A, width_A, n1);
+  _subl (A12, A22, M, m1, n2, m2, n2, width_A, width_A, n1);
     // N <- B21 + B22
-  _add<false, true> (B21, B22, N, n2, o1, n2, o2, width_B, width_B, o1);
+  _addl (B21, B22, N, n2, o1, n2, o2, width_B, width_B, o1);
 
   // X7 <- M * N
   _strassen (M, N, X7,
@@ -205,9 +170,9 @@ void _strassen (int * A, int * B, int * C,
 
   // Calcul de X6
     // M <- A21 - A11
-  _add<true, false> (A21, A11, M, m2, n1, m2, n1, width_A, width_A, n1);
+  _subr (A21, A11, M, m2, n1, m2, n1, width_A, width_A, n1);
     // N <- B11 + B12
-  _add<false, true> (B11, B12, N, n1, o2, n1, o2, width_B, width_B, o1);
+  _addl (B11, B12, N, n1, o2, n1, o2, width_B, width_B, o1);
 
   // X6 <- M * N
   _strassen (M, N, X6,
@@ -217,7 +182,7 @@ void _strassen (int * A, int * B, int * C,
 
   // Calcul de X5
     // M <- A11 + A12
-  _add<false, true> (A11, A12, M, m1, n2, m1, n2, width_A, width_A, n1);
+  _addl (A11, A12, M, m1, n2, m1, n2, width_A, width_A, n1);
 
   // X5 <- M * B22
   _strassen (M, B22, X5,
@@ -227,99 +192,75 @@ void _strassen (int * A, int * B, int * C,
 
   // Calcul de X4
     // N <- B21 - B11
-  _add<true, false> (B21, B11, N, n2, o1, n2, o1, width_B, width_B, o1);
+  _subr (B21, B11, N, n2, o1, n2, o1, width_B, width_B, o1);
 
   // X4 <- A22 * N
   _strassen (A22, N, X4,
              m2, n2, o1,
              width_A, o1, width_C);
 
-#if OPTIM2==1
   // X7 (P11) <- X7 + X4
-  _add<false, true> (X7, X4, X7,
+  _addl (X7, X4, X7,
 	  // Note : on passe la taille de X4 à chaque fois
 	  //        pour éviter les parcours inutiles
                     m2, o1, m2, o1,
                     width_C, width_C, width_C);
 
   // X7 <- X7 - X5
-  _add<true, true> (X7, X5, X7, m1, o2, m1, o2, width_C, width_C, width_C);
+  _subl (X7, X5, X7, m1, o2, m1, o2, width_C, width_C, width_C);
 
-#elif OPTIM2==2
-  _add_in<false> (X7, X4, m2, o1, width_C, width_C);
-  _add_in<true> (X7, X5, m1, o2, width_C, width_C);
-#endif
-
-
+  //
   // Calcul de X3
     // N <- B12-B22
-  _add<true, true> (B12, B22, N, n1, o2, n2, o2, width_B, width_B, o1);
+  _subl (B12, B22, N, n1, o2, n2, o2, width_B, width_B, o1);
 
   // X (X3) <- A11 * N
   _strassen (A11, N, X,
 	     m1, n1, o2,
 	     width_A, o1, o1);
 
-#if OPTIM2==1
   // X5 (P12) <- X5 + X3
-  _add<false, true> (X5, X, X5, m1, o2, m1, o2, width_C, o1, width_C);
+  _addl (X5, X, X5, m1, o2, m1, o2, width_C, o1, width_C);
 
   // X6 (P22) <- X6 + X3
-  _add<false, true> (X6, X, X6, m2, o2, m2, o2, width_C, o1, width_C);
+  _addl (X6, X, X6, m2, o2, m2, o2, width_C, o1, width_C);
 
-#elif OPTIM2==2
-  _add_in<false> (X5, X, m1, o2, width_C, o1);
-  _add_in<false> (X6, X, m2, o2, width_C, o1);
-#endif
 
   // Calcul de X2
     // M <- A21 + A22
-  _add<false, true> (A21, A22, M, m2, n1, m2, n2, width_A, width_A, n1);
+  _addl (A21, A22, M, m2, n1, m2, n2, width_A, width_A, n1);
 
   // X (X2) <- M * B11
   _strassen (M, B11, X,
 	     m2, n1, o1,
 	     n1, width_B, o1);
 
-#if OPTIM2==1
   // X4 (P21) <- X4 + X2
-  _add<false, true> (X4, X, X4, m2, o1, m2, o1, width_C, o1, width_C);
+  _addl (X4, X, X4, m2, o1, m2, o1, width_C, o1, width_C);
 
   // X6 (P22) <- X6 - X2
-  _add<true, true> (X6, X, X6, m2, o2, m2, o2, width_C, o1, width_C);
+  _subl (X6, X, X6, m2, o2, m2, o2, width_C, o1, width_C);
 
-#elif OPTIM2==2
-  _add_in<false> (X4, X, m2, o1, width_C, o1);
-  _add_in<true> (X6, X, m2, o2, width_C, o1);
-#endif
 
   // Calcul de X1
     // M <- A11 + A22
-  _add<false, true> (A11, A22, M, m1, n1, m2, n2, width_A, width_A, n1);
+  _addl (A11, A22, M, m1, n1, m2, n2, width_A, width_A, n1);
     // N <- B11 + B22
-  _add<false, true> (B11, B22, N, n1, o1, n2, o2, width_B, width_B, o1);
+  _addl (B11, B22, N, n1, o1, n2, o2, width_B, width_B, o1);
 
   // X (X1) <- M * N
   _strassen (M, N, X,
 	     m1, n1, o1,
 	     n1, o1, o1);
 
-#if OPTIM2==1
   // X7 (P11) <- X7 + X1
-  _add<false, true> (X7, X, X7, m1, o1, m1, o1, width_C, o1, width_C);
+  _addl (X7, X, X7, m1, o1, m1, o1, width_C, o1, width_C);
 
   // X6 (P22) <- X6 + X1
-  _add<false, true> (X6, X, X6, m2, o2, m2, o2, width_C, o1, width_C);
-
-#elif OPTIM2==2
-  _add_in<false> (X7, X, m1, o1, width_C, o1);
-  _add_in<false> (X6, X, m2, o2, width_C, o1);
-#endif
+  _addl (X6, X, X6, m2, o2, m2, o2, width_C, o1, width_C);
 
   sp -= m1*n1+n1*o1+m1*o1;
 
-  //print_extr(C,m,o,width_C);
   return;
-
 }
 

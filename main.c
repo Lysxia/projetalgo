@@ -25,21 +25,24 @@ int main (int argn, char** argv)
 
 #if 1
 
-  int m,n,o;
+  int m,n,_n,o;
   int *A, *B, *C, *D;
   float t;
   
-  scanf("%d %d %d ", &m, &n, &o);
-
-  if (0 == (A = read_matrix(m,n)))
+  if (0 == (A = read_matrix(&m,&n)))
   {
       printf("Could not read 1st matrix.\n");
       return 1;
   }
 
-  if (0 == (B = read_matrix(n,o)))
+  if (0 == (B = read_matrix(&_n,&o)))
   {
       printf("Could not read 2nd matrix.\n");
+      return 1;
+  }
+  else if (_n!=n)
+  {
+      printf("Matrix sizes not compatible.\n");
       return 1;
   }
 #if PRINT
@@ -71,7 +74,7 @@ int main (int argn, char** argv)
   if (0 == (D = mult(A,B,m,n,o)))
   { 
       printf("Multiplication failed.\n");
-      return 1;
+      return 2;
   }
 
 #if PRINT
@@ -132,13 +135,5 @@ int main (int argn, char** argv)
 #endif
 
   return 0;
-}
-
-bool matrix_equal(int* A, int* B, int m, int n)
-{
-    for (int i=0 ; i<m*n ; i++)
-	if (!(A[i]==B[i]))
-	    return false;
-    return true;
 }
 

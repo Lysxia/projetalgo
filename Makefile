@@ -1,9 +1,11 @@
-OBJ= matrixio.o naive.o strassen.o
+SRC= matrixio.cpp naive.cpp strassen.cpp
+HDR= matrixio.h naive.h strassen.h
+EXEC=strassen
+CFLAGS=-D PRINT=false -D MULT_NAIVE=true -O2
+
 # Variables dépendant des cibles
-strassen1: CFLAGS=-D PRINT=false -D MULT_NAIVE=true -D OPTIM=1 -D OPTIM2=1\
-	-D OPTIM3=1 -D STOP=50 -O2
-strassen2: CFLAGS=-D PRINT=false -D MULT_NAIVE=false -D OPTIM=1 -D OPTIM2=1\
-	-D OPTIM3=2 -D STOP=50 -O2
+strassen1: CFLAGS=-D PRINT=false -D MULT_NAIVE=true -O2
+strassen2: CFLAGS=-D PRINT=false -D MULT_NAIVE=false -D OSTRASSEN -D STOP=50 -O2
 
 strassen1: EXEC=strassen1
 strassen2: EXEC=strassen2
@@ -15,27 +17,27 @@ strassen1: strassen
 strassen2: strassen
 
 
-strassen: $(OBJ) main.o
-	g++ $(CFLAGS) $(OBJ) main.o -o $(EXEC)
+strassen: $(SRC) $(HDR) main.cpp main.h
+	g++ $(CFLAGS) $(SRC) main.cpp -o $(EXEC)
 
 
-%.o: %.cpp %.h
-	g++ $(CFLAGS) $< -c
+1.100: rand2 strassen1
+	./rand2 100 100 100 | ./strassen1
 
-test: test.txt
-	./strassen < test.txt
+1.1000: rand2 strassen1
+	./rand2 1000 1000 1000 | ./strassen1
 
-test100: rand2 strassen
-	./rand2 100 100 100 | ./strassen
+1.3000: rand2 strassen1
+	./rand2 3000 3000 3000 | ./strassen1
 
-test1000: rand2 strassen
-	./rand2 1000 1000 1000 | ./strassen
+2.100: rand2 strassen2
+	./rand2 100 100 100 | ./strassen2
 
-test2000: rand2 strassen
-	./rand2 2000 2000 2000 | ./strassen
+2.1000: rand2 strassen2
+	./rand2 1000 1000 1000 | ./strassen2
 
-test3000: rand2 strassen
-	./rand2 3000 3000 3000 | ./strassen
+2.3000: rand2 strassen2
+	./rand2 3000 3000 3000 | ./strassen2
 
 rand2: randmatrices.c
 	gcc randmatrices.c -o rand2
