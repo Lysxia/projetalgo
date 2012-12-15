@@ -10,7 +10,6 @@ int main(int argc, char** argv)
     int n_mat; // Nb matrices
     int **m;   // matrix list
     int *s;    // matrix size list
-    int _n, i;
 
     if (argc==1)
     {
@@ -21,7 +20,7 @@ int main(int argc, char** argv)
 	FILE *f=fopen(argv[1],"r");
 	if (f==NULL)
 	{
-	    printf("Failed to open file '%s'",argv[1]);
+	    printf("Failed to open file '%s'\n",argv[1]);
 	    return 1;
 	}
 	m=fread_matrices(f,&s,&n_mat);
