@@ -54,6 +54,7 @@ Initialement écrit en C++ pour les templates, le projet est maintenant
   \item {\it randmatrices.c} : générateur de matrices pseudo-aléatoires,
   graine laissée par défaut car l'algorithme de Strassen n'est pas
   influencé par les valeurs des coefficients ;
+\end{itemize}
 
 \subsection{Usage, cibles de la commande make}
 
@@ -62,13 +63,32 @@ arrête la récursion de l'algorithme de Strassen
 quand une dimension vaut 1, la version 2 arrête quand
 une dimension arrive à moins de 50.
 
+En entrée, une matrice est donnée par :
+sur une première ligne ses dimensions séparées par un espace ou saut de
+ligne, puis ses coefficients séparés par des espaces ou sauts de ligne
 
 \begin{description}
-  \item[default (make)] génère tous les exécutables associés au projet.
-
-
-  
-\end{itemize}
+  \item[default] compile tous les exécutables associés au projet.
+  \item[rand2] {\bf ./rand2 M N P} affiche deux matrices
+  pseudo-aléatoires, de tailles $MN$, $NP$.
+  \item[strassen1] multiplie deux matrices données en entrée {\bf STDIN}
+  avec l'algorithme de Strassen et le naïf.
+  \item[strassen2] applique seulement l'algorithme de Strassen (2), i.e
+  la version optimisée.
+  (ce qui permet d'augmenter la taille des matrices en entrée)
+  \item[lpd1/2] "longproduct" multiplie une (longue) suite de N matrices
+  parenthésée optimalement, avec l'algorithme de Strassen :
+  N est donné sur la première ligne en entrée, puis N matrices l'une
+  après l'autre. (entrée : {\bf STDIN} ou un fichier en ligne de commande)
+  \item[naive] idem, de manière naïve.
+  \item[fmult1/2] {\bf ./fmult\$i N MIN MAX} où {\bf \$i} vaut 1 ou 2,
+  génère N matrices à coefficients dans $[MIN;MAX[$ et les multiplie
+  avec l'algo. de Strassen et le parenthésage optimal.
+  \item[demo1/2] {\bf ./demo\$i N MIN MAX}, compare l'approche optimisée
+  (fmult1/2) et l'approche naive (naive) sur des matrices
+  pseudo-aléatoires.
+\end{description}
+	
 
 \section{Algorithme de Strassen}
 
@@ -155,6 +175,16 @@ Cette modification a divisé le temps de calcul
 par un facteur entre $5$ et $10$.
 
 \section{Parenthésage optimal}
+
+On représente un parenthésage par un arbre binaire de "coupes" (relatives),
+matérialisé par un tableau qui l'énumère dans l'ordre préfixe.
+
+Pour une suite $A_0 \dots A_{n-1}$ de matrices à multiplier, on associe un
+arbre de coupe optimale (ACO) qu'on interprète ainsi : si $i$ est la valeur
+de la racine, alors le parenthésage optimal multiplie $(A_0 \dots A_{i-1})$
+avec $(A_i \dots A_{n-1})$, le fils gauche est l'ACO du premier facteur,
+le fils droit celui du deuxième.
+
 
 \end{document}
 
