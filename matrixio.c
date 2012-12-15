@@ -4,24 +4,25 @@
 
 
 // Fonctions de lecture et affichage, représentation brute
-int * read_matrix (int* m, int* n)
+int* read_matrix (int* m, int* n)
 {
-  int * r;
+  int *r, i;
   scanf("%d %d",m,n);
-  if (0 == (r = (int *) malloc (*m**n*sizeof(int))))
+  if (0 == (r=malloc (*m**n*sizeof(int))))
       return 0;
 
-  for (int i = 0; i < *m * *n; i++)
+  for (i = 0; i < *m * *n; i++)
     scanf("%d ", r + i);
   
   return r;
 }
 
-void print_matrix (int * A, int m, int n)
+void print_matrix (int* A, int m, int n)
 {
+    int i;
   printf ("Matrix %d %d :\n", m, n);
 
-  for (int i = 0; i < m * n; i++)
+  for (i = 0; i < m * n; i++)
     printf((i + 1) % n ? "%d " : "%d\n", A[i]);
 }
 
@@ -43,13 +44,14 @@ void print_paren(int* tree, int n)
 /* Fonctions auxiliaires */
 
 // Représentation sous-matrice
-void print_extr(int * A, int m, int n, int w)
+void print_extr(int* A, int m, int n, int w)
 {
 #ifdef PRINT
+    int i,j;
     printf("Matrix %d %d :\n", m, n);
 
-    for (int i = 0 ; i<m ; i++)
-	for (int j = 0 ; j<n ; j++)
+    for (i = 0 ; i<m ; i++)
+	for (j = 0 ; j<n ; j++)
 	    printf((j==n-1)?"%d\n":"%d ",A[j+i*w]);
 #endif
 }
@@ -77,10 +79,11 @@ void _print_paren(int* tree, int n, int i)
     return;
 }
 
-bool matrix_equal(int* A, int* B, int m, int n)
+int matrix_equal(int* A, int* B, int m, int n)
 {
-    for (int i=0 ; i<m*n ; i++)
+    int i;
+    for (i=0 ; i<m*n ; i++)
 	if (!(A[i]==B[i]))
-	    return false;
-    return true;
+	    return 0;
+    return 1;
 }

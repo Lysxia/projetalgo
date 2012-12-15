@@ -8,6 +8,6 @@ void print_paren(int*,int);
 void print_extr(int*,int,int,int);
 void _print_paren(int*,int,int);
 
-bool matrix_equal (int*,int*,int,int);
+int matrix_equal (int*,int*,int,int);
 
 #endif
