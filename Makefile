@@ -1,4 +1,4 @@
-SRC= matrixio.cpp naive.cpp strassen.cpp
+SRC= matrixio.c naive.c strassen.c
 HDR= matrixio.h naive.h strassen.h
 EXEC=strassen
 CFLAGS=-D PRINT=false -D MULT_NAIVE=true -O2
@@ -17,8 +17,8 @@ strassen1: strassen
 strassen2: strassen
 
 
-strassen: $(SRC) $(HDR) main.cpp main.h
-	g++ $(CFLAGS) $(SRC) main.cpp -o $(EXEC)
+strassen: $(SRC) $(HDR) main.c main.h
+	g++ $(CFLAGS) $(SRC) main.c -o $(EXEC)
 
 
 1.100: rand2 strassen1
@@ -29,6 +29,9 @@ strassen: $(SRC) $(HDR) main.cpp main.h
 
 1.3000: rand2 strassen1
 	./rand2 3000 3000 3000 | ./strassen1
+
+#2.%: rand2 strassen2
+#	./rand2 
 
 2.100: rand2 strassen2
 	./rand2 100 100 100 | ./strassen2
@@ -44,7 +47,7 @@ rand2: randmatrices.c
 
 
 paren:
-	g++ parenthesization.cpp
+	g++ parenthesization.c
 
 
 # Général
