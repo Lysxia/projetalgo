@@ -14,20 +14,7 @@ int main(int argc, char** argv)
 
     if (argc==1)
     {
-        scanf("%d ", &n_mat);
-	m=malloc(n_mat*sizeof(int*));
-	s=malloc((n_mat+1)*sizeof(int));
-	for (i=0 ; i<n_mat ; i++)
-	{
-	  m[i]=read_matrix(s+i,s+i+1);
-	  if (i>0&&_n!=s[i])
-	  {
-	      printf("Matrix sizes not compatible :");
-	      printf("%ux%u, %ux%u",s[i-1],_n,s[i],s[i+1]);
-	      return 1;
-	  }
-	  _n=s[i+1];
-	}
+	m=read_matrices(&s,&n_mat);
     }
     else if (argc==2)
     {

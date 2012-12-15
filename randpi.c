@@ -21,7 +21,7 @@ int** randmatrices(int n_mat, int** s, int min, int max)
     if (max<min+1)
 	max=min+1;
     srand(max*min);
-    int m, n, *a=malloc(n_mat*sizeof(int*));
+    int i, **m=malloc(n_mat*sizeof(int*));
     int *t=malloc((n_mat+1)*sizeof(int));
 
     t[0]=R;

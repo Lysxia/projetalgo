@@ -24,9 +24,10 @@ int** read_matrices (int** t, int* n_mat)
 {
         scanf("%d ", n_mat);
 	int _n;
-	int m=malloc(n_mat*sizeof(int*));
-	int s=malloc((n_mat+1)*sizeof(int));
-	for (i=0 ; i<n_mat ; i++)
+	int **m=malloc(*n_mat*sizeof(int*));
+	int *s=malloc((*n_mat+1)*sizeof(int));
+	int i;
+	for (i=0 ; i<*n_mat ; i++)
 	{
 	  m[i]=read_matrix(s+i,s+i+1);
 	  if (i>0&&_n!=s[i])

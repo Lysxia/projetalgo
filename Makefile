@@ -1,7 +1,7 @@
 CC=gcc
 # SRC/HDR : dépendances utilisées par tout le monde
-SRC=matrixio.c naive_mult.c extracted.c strassen.c
-HDR=matrixio.h naive_mult.h extracted.h strassen.h
+SRC=randpi.c matrixio.c naive_mult.c extracted.c strassen.c
+HDR=randpi.h matrixio.h naive_mult.h extracted.h strassen.h
 PAR=parenthesization.c
 PHD=parenthesization.h
 EXECSTR=strassen
