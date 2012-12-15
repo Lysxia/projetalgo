@@ -5,3 +5,5 @@
 - Rapport
 - Faire un test pour comparer les boucles utilisant des indices aux boucles incrémentant directement les pointeurs
 - Vérifier qu'on clean en sortie
+- Enlever les include inutiles
+- Unifier les types entre les fichiers
