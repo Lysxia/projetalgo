@@ -49,7 +49,8 @@ strassen1: EXECSTR=strassen1
 strassen2: EXECSTR=strassen2
 strassenp: EXECSTR=strassenp
 
-# Strassen1 et 2 ne servent qu'à définir des variables particulières
+# Strassen1 et 2 ne servent qu'à définir des variables spécifiques, le build 
+# est effectué par strassen
 strassen1: strassen
 strassen2: strassen
 strassenp: strassen
@@ -70,7 +71,7 @@ fmult2: CFLAGS=$(COPTFLAGS)
 fmult1: fmult
 fmult2: fmult
 
-#
+# Variables spécifiques
 demo1: EXECD=demo1
 demo2: EXECD=demo2
 demo2: CFLAGS=$(COPTFLAGS)
@@ -88,10 +89,14 @@ demo2: demo
 
 
 
-paren:
-	g++ parenthesization.c
-
-
 # ____.:Utils:.____
 clean:
 	rm -f *\~ *.o
+
+archive: clean
+	mkdir Xia_Voizard_Strassen
+	mkdir Xia_Voizard_Strassen/report
+	cp *.[hc] Makefile   Xia_Voizard_Strassen
+	cp report/report_algo.pdf   Xia_Voizard_Strassen/report/
+	tar -vzcf Xia_Voizard_Strassen.tar Xia_Voizard_Strassen
+	rm -rf Xia_Voizard_Strassen

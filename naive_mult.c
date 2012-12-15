@@ -27,8 +27,9 @@ int* naive_mult (int* A, int* B, int m, int n, int o)
 }
 
 // Cette fonction ne libère aucune mémoire qui lui passée
-// (à part lescalculs intermediaires)
-// Il faut libérer son résultat une fois fini
+// (à part les calculs intermediaires)
+// La mémoire utilisée pour son résultat étant allouée ici, il faut que 
+// l'appelant la libère une fois fini
 int* naive_product (int** matrices, int * sizes, int term_count)
 {
   int cur;
