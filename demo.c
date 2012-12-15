@@ -52,7 +52,9 @@ int main(int argc, char** argv)
     // The following code is used only for the demo program (it computes the 
     // product and also checks if the product seems okay)
 #ifdef CHECK_NAIVE
+    t = clock();
     naive_res = naive_product (m, s, n);
+    printf("Naive product time : %.3fs\n", (clock()-t)/CLOCKS_PER_SEC);
 
     if (!matrix_equal (strassen_res, naive_res, s[0], s[n]))
     {
