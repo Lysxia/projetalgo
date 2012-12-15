@@ -12,8 +12,12 @@ CDEFFLAGS=-D MULT_NAIVE=1 -D REAL_COST -Wno-unused-result -O2
 CFLAGS=$(CDEFFLAGS)
 COPTFLAGS=-D MULT_NAIVE=0 -D REAL_COST -D OSTRASSEN -D STOP=50 -O2 -Wno-unused-result
 
-default: rand2 strassen1 lpd1 naive fmult1 demo1
-default: strassen2 lpd2 fmult2 demo2
+default:
+	make default1
+	make default2
+
+default1: rand2 strassen1 lpd1 naive fmult1 demo1
+default2: strassen2 lpd2 fmult2 demo2
 
 # ____.:Build:.____
 # Programme principal
@@ -91,7 +95,7 @@ demo2: demo
 
 # ____.:Utils:.____
 clean:
-	rm -f *\~ *.o
+	rm -rf *\~ *.o Xia_Voizard_Strassen
 
 archive: clean
 	mkdir Xia_Voizard_Strassen
