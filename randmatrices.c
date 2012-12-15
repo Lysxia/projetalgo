@@ -35,12 +35,12 @@ int main(int argn, char** argv)
 	return 1;
     }
 
-    printf("%d %d %d\n\n", m, n, o);
+    printf("%d %d\n", m, n);
 
     srand(m*n*o);
     for (i=0 ; i<m*n ; i++)
         printf(((i+1)%n)?"%d ":"%d\n",rand()%10);
-    printf("\n");
+    printf("%d %d\n", n, o);
     for (i=0 ; i<n*o ; i++)
         printf(((i+1)%o)?"%d ":"%d\n",rand()%10);
 
