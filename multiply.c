@@ -5,14 +5,14 @@
 #include"multiply.h"
 
 // Optimally parenthesized multiplication
-int* mult_opt(int** m, mat_size_t* s, int n_mat)
+int* mult_opt(int** m, unsigned* s, int n_mat)
 {
-    int* order=get_optimal_product(n_mat,s);
+    int *order=get_optimal_product(n_mat,s);
 
     return orderedmult(m,s,order,n_mat);
 }
 
-int* orderedmult(int** m, mat_size_t* s, int* order, int n_mat)
+int* orderedmult(int** m, unsigned* s, int* order, int n_mat)
 {
     if (n_mat==1)
 	return m[0];

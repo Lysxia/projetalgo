@@ -7,7 +7,7 @@
 typedef uint32_t mat_size_t;
 typedef uint64_t cost_t;
 
-int* get_optimal_product(int, mat_size_t* sizes);
+int* get_optimal_product(int, unsigned* sizes);
 void build_tree (int*,int);
 void clean_tree ();
 void _bt (int*,int, int,int);

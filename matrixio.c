@@ -11,7 +11,7 @@ void _print_paren(int*,int,int);
 int* read_matrix (int* m, int* n)
 {
   int *r, i;
-  scanf("%d %d",m,n);
+  scanf("%u %u",m,n);
   if (0 == (r=malloc (*m**n*sizeof(int))))
       return 0;
 
@@ -24,7 +24,7 @@ int* read_matrix (int* m, int* n)
 void print_matrix (int* A, int m, int n)
 {
     int i;
-  printf ("Matrix %d %d :\n", m, n);
+  printf ("Matrix %u %u :\n", m, n);
 
   for (i = 0; i < m * n; i++)
     printf((i + 1) % n ? "%d " : "%d\n", A[i]);
