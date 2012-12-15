@@ -30,8 +30,8 @@ strassen: $(SRC) $(HDR) main.c main.h
 1.3000: rand2 strassen1
 	./rand2 3000 3000 3000 | ./strassen1
 
-#2.%: rand2 strassen2
-#	./rand2 
+2.%: rand2 strassen2
+	./rand2 $* $* $* | ./strassen2
 
 2.100: rand2 strassen2
 	./rand2 100 100 100 | ./strassen2
