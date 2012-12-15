@@ -95,6 +95,8 @@ clean:
 
 archive: clean
 	mkdir Xia_Voizard_Strassen
-	cp *.[hc] Xia_Voizard_Strassen
+	mkdir Xia_Voizard_Strassen/report
+	cp *.[hc] Makefile   Xia_Voizard_Strassen
+	cp report/report_algo.pdf   Xia_Voizard_Strassen/report/
 	tar -vzcf Xia_Voizard_Strassen.tar Xia_Voizard_Strassen
 	rm -rf Xia_Voizard_Strassen
