@@ -3,7 +3,7 @@
 
 // Multiplication naîve
 // A : m * n - B n * o
-int* mult (int* A, int* B, int m, int n, int o)
+int* naive_mult (int* A, int* B, int m, int n, int o)
 {
   int *r = malloc (sizeof (int) * m * o);
   int i,j,k;

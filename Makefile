@@ -1,11 +1,12 @@
 CC=gcc
+# SRC/HDR : dépendances utilisées par tout le monde
 SRC=matrixio.c naive_mult.c extracted.c strassen.c
 HDR=matrixio.h naive_mult.h extracted.h strassen.h
 PAR=parenthesization.c
 PHD=parenthesization.h
 EXECSTR=strassen
 EXECLPD=lpd
-CFLAGS=-D MULT_NAIVE=1 -O2 -Wno-unused-result 
+CFLAGS=-D MULT_NAIVE=1 -O2 -Wno-unused-result
 COPTFLAG=-D MULT_NAIVE=0 -D OSTRASSEN -D STOP=50 -O2 -Wno-unused-result
 
 
@@ -34,6 +35,10 @@ strassen: $(SRC) $(HDR) main.c main.h
 # Multiplication d'une suite de matrices
 lpd: $(SRC) $(HDR) $(PAR) $(PHD) multiply.c multiply.h longproduct.c longproduct.h
 	$(CC) $(CFLAGS) $(SRC) $(PAR) multiply.c longproduct.c -o $(EXECLPD)
+
+# Multiplication d'une suite de matrices par la méthode naïve
+naive: $(SRC) $(HDR) naive.c naive.h
+	$(CC) $(CFLAGS) $(SRC) -std=c99 naive.c -o naive
 
 
 # Programme de génération de 2 matrices

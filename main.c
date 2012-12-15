@@ -57,7 +57,7 @@ int main (int argn, char** argv)
 
 #ifdef MULT_NAIVE
   t=clock();
-  if (0 == (D = mult(A,B,m,n,o)))
+  if (0 == (D = naive_mult(A,B,m,n,o)))
   { 
       printf("Multiplication failed.\n");
       return 2;
