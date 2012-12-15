@@ -7,7 +7,7 @@ PHD=parenthesization.h
 EXECSTR=strassen
 EXECLPD=lpd
 CFLAGS=-D MULT_NAIVE=1 -O2 -Wno-unused-result
-COPTFLAG=-D MULT_NAIVE=0 -D OSTRASSEN -D STOP=50 -O2 -Wno-unused-result
+COPTFLAGS=-D MULT_NAIVE=0 -D OSTRASSEN -D STOP=50 -O2 -Wno-unused-result
 
 
 # Variables dépendant des cibles

@@ -1,0 +1,5 @@
+// Créer la matrice
+x=int(rand(1000,789,'uniform') * 10)
+
+// Imprimer x dans un fichier
+fprintfMat("/tmp/lol1", x, "%g")
