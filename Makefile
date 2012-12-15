@@ -6,7 +6,7 @@ PAR=parenthesization.c
 PHD=parenthesization.h
 EXECSTR=strassen
 EXECLPD=lpd
-CDEFFLAGS=-D MULT_NAIVE=1 -Wno-unused-result
+CDEFFLAGS=-D MULT_NAIVE=1 -D REAL_COST -Wno-unused-result
 CFLAGS=$(CDEFFLAGS)
 COPTFLAGS=-D MULT_NAIVE=0 -D OSTRASSEN -D STOP=50 -O2 -Wno-unused-result
 

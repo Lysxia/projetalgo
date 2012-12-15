@@ -10,7 +10,6 @@ int main(int argc, char** argv)
     int n_mat; // Nb matrices
     int **m;   // matrix list
     int *s;    // matrix size list
-    int _n, i;
 
     if (argc==1)
     {
