@@ -153,7 +153,7 @@ pour la mutliplication de matrices}
       xlabel=$n$,
       ylabel=time (s),
       ymin = 0, xmin = 0,
-      xmax = 2000,
+      xmax = 1500,
       legend style ={at={(0.25,.65)}, anchor=south}]
       \addplot[smooth, mark=x, blue] table[x=n,y=naive] {databireme.dat};
       \addlegendentry{Naïf}
@@ -279,9 +279,14 @@ pour la mutliplication de matrices}
 
 \begin{frame}{Conclusion}
   \begin{itemize}
-    \item Des algorithmes de complexités asymptotiques meilleures
+  \item Améliorations possibles :
+    \begin{itemize}
+    \item Multithread
+    \item Optimisations compilateur ?
+    \end{itemize}
+  \item Des algorithmes de complexités asymptotiques meilleures
     sont connus pour le parenthésage et la multiplication.
-    \item Algorithme de Strassen plus efficace dans les
+  \item Algorithme de Strassen plus efficace dans les
     applications pratiques (pour l'instant)
   \end{itemize}
 \end{frame}
