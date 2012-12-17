@@ -12,7 +12,7 @@
 int main(int argc, char** argv)
 {
     int **m, *s;
-    int n, min, max;
+    int n, i, min, max;
 
     int * op_order;
     int * strassen_res, * naive_res;
@@ -36,6 +36,12 @@ int main(int argc, char** argv)
 
     
     m = randmatrices(n, &s, min, max);
+
+#if PRINTDEMO
+    if (n<10 && max<10)
+	for (i=0 ; i<n ; i++)
+            print_matrix(m[i],s[i],s[i+1]);
+#endif
 
     t = clock();
     op_order = get_optimal_product (n, s);
@@ -65,6 +71,10 @@ int main(int argc, char** argv)
       printf("Ok, result checked\n");
 #endif
 
+#if PRINTDEMO
+    if (max<20)
+	print_matrix(strassen_res,s[0],s[n]);
+#endif
     // No need to free : we're exiting, the OS will get all the memory back...
     
     return 0;    

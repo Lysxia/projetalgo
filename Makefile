@@ -8,10 +8,10 @@ EXECSTR=strassen
 EXECLPD=lpd
 EXECFM=fmult
 EXECD=demo
-CDEFFLAGS=-D MULT_NAIVE=1 -D REAL_COST -Wno-unused-result -O2 -funroll-loops -ffast-math
-CDEFFLAGS0=-D MULT_NAIVE=0 -D REAL_COST -Wno-unused-result -O2
+CDEFFLAGS=-D MULT_NAIVE=1 -D REAL_COST -D PRINTDEMO -Wno-unused-result -O2 -funroll-loops -ffast-math
+CDEFFLAGS0=-D MULT_NAIVE=0 -D REAL_COST -D PRINTDEMO -Wno-unused-result -O2
 CFLAGS=$(CDEFFLAGS)
-COPTFLAGS=-D MULT_NAIVE=0 -D REAL_COST -D OSTRASSEN -D STOP=50 -O2 -Wno-unused-result 
+COPTFLAGS=-D MULT_NAIVE=0 -D REAL_COST -D OSTRASSEN -D STOP=50 -D PRINTDEMO -O2 -Wno-unused-result 
 
 default:
 	make default1

@@ -4,6 +4,8 @@
 #include "matrixio.h"
 #include "randpi.h"
 
+#define CENT 100
+
 void _print_paren(int*,int*,int,int);
 
 // Fonctions de lecture et affichage, représentation brute
@@ -82,13 +84,14 @@ int** fread_matrices (FILE* f, int** t, int* n_mat)
 	return m;
 }
 
+//On va afficher les coefficients modulo 100
 void print_matrix (int* A, int m, int n)
 {
-    int i;
+  int i;
   printf ("Matrix %d %d :\n", m, n);
 
   for (i = 0; i < m * n; i++)
-    printf((i + 1) % n ? "%d " : "%d\n", A[i]);
+    printf((i + 1) % n ? "%3d " : "%3d\n", (A[i]%CENT+CENT)%CENT);
 }
 
 // Affiche le parenthésage représenté par tree
