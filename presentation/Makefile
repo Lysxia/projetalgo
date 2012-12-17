@@ -1,4 +1,4 @@
-slides.pdf: slides.tex datastrassen.dat
+slides.pdf: slides.tex databireme.dat datatamarin.dat optibireme.dat optitetragone.dat
 	pdflatex $<
 	evince slides.pdf &
 

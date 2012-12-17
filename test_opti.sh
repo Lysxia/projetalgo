@@ -20,7 +20,7 @@ done
 
 cp strassen2 strassen$tmp
 
-for i in {100..3000..100}
+for i in {2000..3000..100}
 do
     echo -n $i","
     ./rand2 $i $i $i | ./strassen$tmp
