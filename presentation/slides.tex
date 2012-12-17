@@ -91,6 +91,92 @@ pour la mutliplication de matrices}
 \end{frame}
 
 \begin{frame}
+  \frametitle{\insertsubsection}
+  \framesubtitle{Economiser des ressources}
+  \begin{itemize}
+    \item On veut multiplier
+    $M$ et $N$ de tailles $m\times n$, $n \times p$
+    $$M=\begin{pmatrix}
+      M_{11} & M_{12} \\
+      M_{21} & M_{22}
+    \end{pmatrix}$$
+    \item $M_{1j}$ ont hauteur $\lceil \frac{m+1}{2} \rceil$
+    \item $M_{2j}$ ont hauteur $\lfloor \frac{m+1}{2} \rfloor$
+    \item $M_{i1}$ ont largeur $\lceil \frac{n+1}{2} \rceil$
+    \item $M_{i2}$ ont largeur $\lfloor \frac{n+1}{2} \rfloor$
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{\insertsubsection}
+  \framesubtitle{Economiser des ressources}
+  \begin{itemize}
+    \item Cas $m$ et $p$ impairs, $n$ pair ;
+    si on ajoute des colonnes et lignes nulles à $M$ et $N$ :
+    $$M'
+    =\begin{pmatrix}
+      M'_{11} & M'_{12} \\
+      M'_{21} & M'_{22}
+    \end{pmatrix}
+    =\left(\begin{array}{cccc}
+      ~ & ~ & ~ & ~ \\
+      ~ & M & ~ & ~ \\
+      ~ & ~ & ~ & ~ \\
+      \hline
+      ~ & 0 & ~ & ~
+    \end{array}\right)$$
+  $$N'
+    =\begin{pmatrix}
+      N'_{11} & N'_{12} \\
+      N'_{21} & N'_{22}
+    \end{pmatrix}
+    =\left(\begin{array}{ccc|c}
+      ~ & ~ & ~ & ~ \\
+      ~ & N & ~ & 0 \\
+      ~ & ~ & ~ & ~ \\
+      ~ & ~ & ~ & ~
+    \end{array}\right)$$
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{\insertsubsection}
+  \framesubtitle{Economiser des ressources}
+  \begin{itemize}
+    \item Pour le produit on a :
+    $$P'=M'\cdot N'=
+    \left(\begin{array}{ccc|c}
+      ~ & ~ & ~ & ~ \\
+      ~ & P & ~ & 0 \\
+      ~ & ~ & ~ & ~ \\
+      \hline
+      ~ & 0 & ~ & 0
+    \end{array}\right)$$
+    $$P=\begin{pmatrix}
+        P_{11} & P_{12} \\
+        P_{21} & P_{22}
+    \end{pmatrix}$$
+    $$P'_{22}=\left(\begin{array}{ccc|c}
+        ~ & ~ & ~ & ~ \\
+        ~ & P_{22} & ~ & 0 \\
+        ~ & ~ & ~ & ~ \\
+        \hline
+        ~ & 0 & ~ & ~
+      \end{array}\right)$$
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{\insertsubsection}
+  \framesubtitle{Economiser des ressources}
+  \begin{itemize}
+    \item $P'_{22}=(\cdots)+X_6$
+    \item $X_6$ de taille
+    $\lceil\frac{m+1}{2}\rceil\times\lceil\frac{p+1}{2}\rceil$
+    \item $P_{22}$ de taille
+    $\lfloor\frac{m+1}{2}\rfloor\times\lfloor\frac{p+1}{2}\rfloor$
+    \item Inutile de calculer les dernières ligne et colonne de $X_6$
+  \end{itemize}
 \end{frame}
 
 \begin{frame}
