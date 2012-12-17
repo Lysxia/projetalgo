@@ -93,7 +93,8 @@ pour la mutliplication de matrices}
   void _addl(int* A, int* B, int* C,
              int m, int n,
              int width_A, int width_B, int width_C);
-  \end{verbatim}\normalsize
+  \end{verbatim}
+  \normalsize
   avec \verb=subl=, \verb=subr= de même prototype que \verb=addr=.
 
   Ces fonctions effectuent une opération sur deux sous-matrices A et B
@@ -122,11 +123,51 @@ pour la mutliplication de matrices}
 \subsection{Principe}
 \begin{frame}
   \frametitle{\insertsubsection}
+  \begin{itemize}
+  \item Définition du produit de $n$ matrices
+  \item Parenthèsages équivalents
+  \item Différents coûts
+  \end{itemize}
+  
+Exemple de coûts : Produit $A_1 \times A_2 \times A_3$
+\[
+\begin{array}{cc} 
+  \mbox{Matrice} & \mbox{Taille}\\
+  A_1 & 1000 \times 2\\
+  A_2 & 2 \times 8000\\
+  A_3 & 8000 \times 400\\
+\end{array}
+\]
+donne :
+\[
+\begin{array}{cc}
+  \mbox{Parenthésage} & \mbox{Coût (algorithme naïf)}\\
+  (A_1 \times A_2) \times A_3 & 3.216 \times 10^9\\
+  A_1 \times (A_2 \times A_3) & 7.2 \times 10^6
+\end{array}
+\]
+%%% SAMMMMUUUUEEEEELLLL : Vérif stp
+
+  % Un produit de $n$ matrices est défini en se ramenant à $n - 1$ produit de
+  % $2$ matrices. Par associativité, on peut effectuer ces produits dans
+  % n'importe quel ordre, tant que l'on conserve l'ordre des matrices
+  % (c'est-à-dire qu'on essaye pas de les faire commuter).
+
+  % En revanche, le nombre d'opérations effectuées pour les différents
+  % parenthésages possibles n'est généralement pas le même. Par exemple :
+
+  % \[\mbox{Soit } A_1, A_2, A_3 \mbox{ des matrices de tailles respectives }
+  % 100\times 2, 2 \times 8000, 8000 \times 4\]
+
 \end{frame}
 
 \subsection{Implémentation}
 \begin{frame}
   \frametitle{\insertsubsection}
+  \begin{itemize}
+  \item Détermination récursive des «~coupures~»
+  \item Respecte la propriété de sous-structure optimale
+  \end{itemize}
 \end{frame}
 %représentation des données
 
