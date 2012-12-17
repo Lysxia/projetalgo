@@ -143,7 +143,7 @@ pour la mutliplication de matrices}
   % Tu dis juste que le produit de matrices est associatif
   % non-commutatif en général. Il suffit donc de trouver le
   % parenth. opti.
-  \item Différents coûts\\
+  \item Différents coûts
   \item Programmation dynamique
   \end{itemize}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -185,14 +185,30 @@ pour la mutliplication de matrices}
   \]
 \end{frame}
 
+\subsection{Structure du problème}
+\begin{frame}
+  \frametitle{\insertsubsection}
+  \begin{itemize}
+    \item Détermination récursive des «~coupures~»
+    \item Exemple : 
+      \[
+      \begin{array}{lcccccccr}
+        \Big((A_1 & \cdot & A_2) & \cdot & (A_3 & \cdot & A_4)\Big) & \cdot & A_5\\
+        & \uparrow & & \uparrow & & \uparrow & & \uparrow \\
+        & 3 & & 2 & & 3' & & 1\\
+      \end{array}
+      \]
+    \item Respecte la propriété de sous-structure optimale
+    \item Programmation dynamique
+  \end{itemize}
+\end{frame}
+
 \subsection{Structure de données}
 \begin{frame}
   \frametitle{\insertsubsection}
   \begin{itemize}
     \item Arbre de coupures
     \item Représentation compacte
-    \item Détermination récursive des «~coupures~»
-    \item Respecte la propriété de sous-structure optimale
   \end{itemize}
 \end{frame}
 
@@ -206,8 +222,9 @@ pour la mutliplication de matrices}
               [.2
                 [.1 $A_1$ $A_2$ ]
                 [.1 $A_3$ $A_4$ ]]
-              $A_5$ ]
-    \item Parcours préfixe : $4,2,1,1$
+              $A_5$ ]\vspace{15pt}
+    \item Parcours préfixe : 
+      $\begin{array}{|c|c|c|c|}\hline 4 & 2 & 1 & 1\\\hline\end{array}$
   \end{itemize}
 \end{frame}
 
@@ -227,7 +244,7 @@ pour la mutliplication de matrices}
     \item Des algorithmes de complexités asymptotiques meilleures
     sont connus pour le parenthésage et la multiplication.
     \item Algorithme de Strassen plus efficace dans les
-    applications pratiques. (pour l'instant)
+    applications pratiques (pour l'instant)
   \end{itemize}
 \end{frame}
 
