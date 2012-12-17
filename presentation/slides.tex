@@ -29,7 +29,7 @@ pour la mutliplication de matrices}
 \begin{frame}{Introduction}
   Objectifs :
   \begin{itemize}
-    \item Ecrire du C.
+    \item Ecrire du C ;
     \item Faire mieux que les algorithmes naifs.
   \end{itemize}
 \end{frame}
@@ -37,17 +37,17 @@ pour la mutliplication de matrices}
 \section{Algorithme de Strassen}
 
 \subsection{Principe}
-\begin{frame}
+\begin{frame}[fragile]
   \frametitle{\insertsubsection}
   \begin{itemize}
     \item Multiplication rapide de matrices sur un anneau ;
-    (ici, des {\bf int})
+    (ici, des \verb=int=)
     \item Limiter le nombre de multiplications, en taille $2 \times 2$,
     \begin{itemize}
       \item mult. naïve : 8 multiplications scalaires,
       \item mult. de Strassen : 7 multiplications ;
     \end{itemize}
-    \item Calcul par blocs, algorithme récursif ;
+    \item Calcul par blocs, algorithme récursif.
   \end{itemize}
 \end{frame}
 
@@ -55,15 +55,16 @@ pour la mutliplication de matrices}
 \begin{frame}[fragile]
   \frametitle{\insertsubsection}
   \framesubtitle{Structures de données}
+  Représentation compacte des données.
   \begin{itemize}
-    \item Matrice $A$ de taille $m\times n$
+    \item<2-> Matrice $A$ de taille $m\times n$
     \begin{itemize}
       \item Tableau \verb=A= d'\verb=int=
       (pointeur sur la première case) de taille \verb=m*n=,
       %alloué dynamiquement
       \item Accès à la case $(i,j)$ : \verb=A[i*n+j]= ;
     \end{itemize}
-    \item<2-> Sous-matrice $M$ extraite de $A$ de taille $m'\times n'$
+    \item<3-> Sous-matrice $M$ extraite de $A$ de taille $m'\times n'$
     \begin{itemize}
       \item Pointeur sur la première case de $M$ dans \verb=A=,
       \item Largeur de la matrice $A$, \verb=n=,
@@ -74,47 +75,60 @@ pour la mutliplication de matrices}
 
 \begin{frame}[fragile]
   \frametitle{\insertsubsection}
-  \small
-  \begin{verbatim}
+  \framesubtitle{Implémentation}
+  \small\begin{verbatim}
   int* strassen(int* A, int* B, int m, int n, int p);
   \end{verbatim}\normalsize
-  Cette fonction prend en argument deux matrices et leurs dimensions,
-  et retourne la matrice produit.
-\end{frame}
 
-\begin{frame}[fragile]
-  \frametitle{\insertsubsection}
-  \framesubtitle{Fonctions auxiliaires}
-  Prototypes :
-  \small\begin{verbatim}
-  void _strassen(int* A, int* B, int* C,
-                 int m, int n, int p,
-                 int width_A, int width_B, int width_C);
-  void _addl(int* A, int* B, int* C,
-             int m, int n,
-             int width_A, int width_B, int width_C);
-  \end{verbatim}\normalsize
-  avec \verb=subl=, \verb=subr= de même prototype que \verb=addr=.
-
-  Ces fonctions effectuent une opération sur deux sous-matrices A et B
-  en plaçant le résultat dans C.
-
-  On évite de cette façon de réécrire beaucoup de coefficients.
+  \begin{itemize}
+    \item Opérations auxiliaires presque en place.
+    \item Minimisation de la mémoire utilisée.
+  \end{itemize}
 \end{frame}
 
 \begin{frame}
-  \framesubtitle{Addition et soustraction de sous-matrices}
+  \frametitle{\insertsubsection}
+  \framesubtitle{Optimisation importante}
+  \begin{itemize}
+  \item
+  Terminer avec une multiplication naive plus tôt dans la récursion ;
+  \item Taille optimale trouvée $\approx 50$.
+  \end{itemize}
 \end{frame}
+
 \subsection{Complexité}
 \begin{frame}
   \frametitle{\insertsubsection}
+  \begin{itemize}
+    \item Temps :
+    \begin{itemize}
+      \item $O(n^{\log_2 7})\approx O(n^{2.81})$
+      pour deux matrices carrées,
+      \item $O(\frac{m\cdot n\cdot p}{min(m,n,p)^{3-\log_2 7}})\approx
+      O(\frac{m\cdot n\cdot p}{min(m,n,p)^{0.19}})$
+      en général ;
+    \end{itemize}
+    \item Espace :
+    \begin{itemize}
+      \item $O(m\cdot n+n\cdot p+m\cdot p)$ en plus des matrices en entrée ;
+      transparent dans le code.
+    \end{itemize}
+  \end{itemize}
 \end{frame}
-
-% Instabilité numérique (flottants)
 
 \subsection{Performance}
 \begin{frame}
-%insert graph
+  \frametitle{\insertsubsection}
+  \begin{tikzpicture}
+  \begin{axis}[
+    xlabel=n,
+    ylabel=time (s)
+  ]
+  \addplot table[x=n,y=naive] {datastrassen.dat};
+  \addplot table[x=n,y=strssn1] {datastrassen.dat};
+  \addplot table[x=n,y=strssn2] {datastrassen.dat};
+  \end{axis}
+  \end{tikzpicture}
 \end{frame}
 
 

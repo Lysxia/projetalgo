@@ -1,4 +1,4 @@
-slides.pdf: slides.tex
+slides.pdf: slides.tex datastrassen.dat
 	pdflatex $<
 
 clean:
