@@ -121,6 +121,8 @@ pour la mutliplication de matrices}
   \end{itemize}
 \end{frame}
 
+
+%%%%%%%% Performances globales %%%%%%%%
 \subsection{Performance}
 \begin{frame}
   \frametitle{\insertsubsection}
@@ -141,6 +143,30 @@ pour la mutliplication de matrices}
     \end{axis}
   \end{tikzpicture}
 \end{frame}
+
+
+%%%%%%%% Performances sur les premières valeurs %%%%%%%%
+\begin{frame}
+  \frametitle{\insertsubsection}
+  \begin{tikzpicture}[scale=1.2]
+    \begin{axis}[
+      xlabel=$n$,
+      ylabel=time (s),
+      ymin = 0, xmin = 0,
+      xmax = 3000]
+      \addplot[smooth, mark=x, blue] table[x=n,y=naive] {databireme.dat};
+      \addlegendentry{Naïf}
+      
+      \addplot[smooth, mark=x, green] table[x=n,y=strssn1] {databireme.dat};
+      \addlegendentry{Strassen 1}
+      
+      \addplot[smooth, mark=x, red] table[x=n,y=strssn2] {optibireme.dat};
+      \addlegendentry{Strassen 2}
+      
+    \end{axis}
+  \end{tikzpicture}
+\end{frame}
+
 
 
 \section{Parenthésage optimal}
