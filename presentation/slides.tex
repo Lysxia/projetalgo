@@ -15,6 +15,14 @@ pour la mutliplication de matrices}
 \titlepage
 \end{frame}
 
+\AtBeginSection[]
+{
+  \begin{frame}<beamer>
+    \frametitle{\insertsection}
+
+    \tableofcontents[currentsection]
+  \end{frame}
+}
 
 \begin{frame}{Introduction}
   Objectifs :
@@ -24,21 +32,86 @@ pour la mutliplication de matrices}
   \end{itemize}
 \end{frame}
 
-\begin{frame}{Algorithme de Strassen}
-  
+\section{Algorithme de Strassen}
+
+\subsection{Principe}
+\begin{frame}
+  \frametitle{\insertsubsection}
+  \begin{itemize}
+    \item Multiplication rapide de matrices sur un anneau ;
+    (ici, des {\bf int})
+    \item Limiter le nombre de multiplications, en taille $2 \times 2$,
+    \begin{itemize}
+      \item mult. naïve : 8 multiplications scalaires,
+      \item mult. de Strassen : 7 multiplications ;
+    \end{itemize}
+    \item Calcul par blocs, algorithme récursif ;
+  \end{itemize}
 \end{frame}
 
+\subsection{Implémentation et optimisation}
+\begin{frame}
+  \frametitle{\insertsubsection}
+  \framesubtitle{Structures de données}
+  \begin{itemize}
+    \item Matrice $A$ de taille $m\times n$
+    \begin{itemize}
+      \item Tableau {\bf A} d'{\bf int}
+      (pointeur sur la première case) de taille {\bf m*n},
+      %alloué dynamiquement
+      \item Accès à la case $(i,j)$ : {\bf A[i*n+j]} ;
+    \end{itemize}
+    \item<2-> Sous-matrice $M$ extraite de $A$ de taille $m'\times n'$
+    \begin{itemize}
+      \item Pointeur sur la première case de $M$ dans {\bf A},
+      \item Largeur de la matrice $A$, {\bf n},
+      \item Accès à la case $(i,j)$ : {\bf M[i*n+j]}.
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{\insertsubsection}
+  \framesubtitle{Addition et soustraction de sous-matrices}
+\end{frame}
+
+\subsection{Complexité}
+\begin{frame}
+  \frametitle{\insertsubsection}
+\end{frame}
+
+% Instabilité numérique
+
+
+\section{Parenthésage optimal}
+\subsection{Principe}
+\begin{frame}
+  \frametitle{\insertsubsection}
+\end{frame}
+
+\subsection{Implémentation}
+\begin{frame}
+  \frametitle{\insertsubsection}
+\end{frame}
+%représentation des données
+
+\subsection{Complexité}
+\begin{frame}
+  \frametitle{\insertsubsection}
+\end{frame}
 % A faire :
 % Complexité, espace, temps
+
 
 %%%%%
 %%%%% Derniers slides
 
 \begin{frame}{Conclusion}
   Des algorithmes de complexités asymptotiques meilleures
-  sont connus.
+  sont connus pour le parenthésage et la multiplication.
 
-  Mais 
+  Mais l'algorithme de Strassen est plus efficace dans les
+  applications pratiques. (pour l'instant)
 \end{frame}
 
 \end{document}
