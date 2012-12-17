@@ -1,6 +1,8 @@
 \documentclass{beamer}
 \usepackage[french]{babel}
 \usepackage[utf8]{inputenc}
+\usepackage{pgfplots}
+\usepackage{listings}
 %\usetheme{Warsaw}
 \title[Projet de programmation et d'algorithmique]{
 Algorithme de Strassen et parenthésage optimal
@@ -50,37 +52,70 @@ pour la mutliplication de matrices}
 \end{frame}
 
 \subsection{Implémentation et optimisation}
-\begin{frame}
+\begin{frame}[fragile]
   \frametitle{\insertsubsection}
   \framesubtitle{Structures de données}
   \begin{itemize}
     \item Matrice $A$ de taille $m\times n$
     \begin{itemize}
-      \item Tableau {\bf A} d'{\bf int}
-      (pointeur sur la première case) de taille {\bf m*n},
+      \item Tableau \verb=A= d'\verb=int=
+      (pointeur sur la première case) de taille \verb=m*n=,
       %alloué dynamiquement
-      \item Accès à la case $(i,j)$ : {\bf A[i*n+j]} ;
+      \item Accès à la case $(i,j)$ : \verb=A[i*n+j]= ;
     \end{itemize}
     \item<2-> Sous-matrice $M$ extraite de $A$ de taille $m'\times n'$
     \begin{itemize}
-      \item Pointeur sur la première case de $M$ dans {\bf A},
-      \item Largeur de la matrice $A$, {\bf n},
-      \item Accès à la case $(i,j)$ : {\bf M[i*n+j]}.
+      \item Pointeur sur la première case de $M$ dans \verb=A=,
+      \item Largeur de la matrice $A$, \verb=n=,
+      \item Accès à la case $(i,j)$ : \verb=M[i*n+j]=.
     \end{itemize}
   \end{itemize}
 \end{frame}
 
-\begin{frame}
+\begin{frame}[fragile]
   \frametitle{\insertsubsection}
-  \framesubtitle{Addition et soustraction de sous-matrices}
+  \small
+  \begin{verbatim}
+  int* strassen(int* A, int* B, int m, int n, int p);
+  \end{verbatim}\normalsize
+  Cette fonction prend en argument deux matrices et leurs dimensions,
+  et retourne la matrice produit.
 \end{frame}
 
+\begin{frame}[fragile]
+  \frametitle{\insertsubsection}
+  \framesubtitle{Fonctions auxiliaires}
+  Prototypes :
+  \small\begin{verbatim}
+  void _strassen(int* A, int* B, int* C,
+                 int m, int n, int p,
+                 int width_A, int width_B, int width_C);
+  void _addl(int* A, int* B, int* C,
+             int m, int n,
+             int width_A, int width_B, int width_C);
+  \end{verbatim}\normalsize
+  avec \verb=subl=, \verb=subr= de même prototype que \verb=addr=.
+
+  Ces fonctions effectuent une opération sur deux sous-matrices A et B
+  en plaçant le résultat dans C.
+
+  On évite de cette façon de réécrire beaucoup de coefficients.
+\end{frame}
+
+\begin{frame}
+  \framesubtitle{Addition et soustraction de sous-matrices}
+\end{frame}
 \subsection{Complexité}
 \begin{frame}
   \frametitle{\insertsubsection}
 \end{frame}
 
-% Instabilité numérique
+% Instabilité numérique (flottants)
+
+\subsection{Performance}
+\begin{frame}
+%insert graph
+\end{frame}
 
 
 \section{Parenthésage optimal}
