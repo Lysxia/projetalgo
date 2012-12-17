@@ -27,7 +27,7 @@ do
 done
 
 
-for i in {1100..2000..100} # Start - stop - increment
+for i in {2000..3000..500} # Start - stop - increment
 do 
     echo -n $i","
     ./rand2 $i $i $i | ./strassen$tmp

@@ -144,6 +144,25 @@ pour la mutliplication de matrices}
   \end{tikzpicture}
 \end{frame}
 
+\begin{frame}
+  \frametitle{\insertsubsection}
+  \begin{tikzpicture}[scale=1.2]
+    \begin{axis}[
+      xlabel=$n$,
+      ylabel=time (s),
+      ymin = 0, xmin = 1500, xmax = 7500]
+      \addplot[smooth, mark=x, blue] table[x=n,y=naive] {datatamarin.dat};
+      \addlegendentry{Naïf}
+      
+      \addplot[smooth, mark=x, green] table[x=n,y=strssn1] {datatamarin.dat};
+      \addlegendentry{Strassen 1}
+      
+      \addplot[smooth, mark=x, red] table[x=n,y=strssn2] {optitetragone.dat};
+      \addlegendentry{Strassen 2}
+      
+    \end{axis}
+  \end{tikzpicture}
+\end{frame}
 
 %%%%%%%% Performances sur les premières valeurs %%%%%%%%
 \begin{frame}
