@@ -127,7 +127,8 @@ pour la mutliplication de matrices}
   \begin{tikzpicture}[scale=1.2]
     \begin{axis}[
       xlabel=$n$,
-      ylabel=time (s)]
+      ylabel=time (s),
+      ymin = 0, xmin = 1500]
       \addplot[smooth, mark=x, blue] table[x=n,y=naive] {datatamarin.dat};
       \addlegendentry{Naïf}
       
