@@ -139,7 +139,7 @@ void _print_paren(int* tree, int* s, int n, int i)
     else
     {
         printf("(");
-        _print_paren(tree,s,tree[0]-1,i);
+        _print_paren(tree+1,s,tree[0]-1,i);
 	printf(").");
     }
 

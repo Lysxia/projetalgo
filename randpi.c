@@ -3,7 +3,7 @@
 
 #include "randpi.h"
 
-#define R rand()%(max-min)+min
+#define R (rand()%(max-min)+(min))
 
 int* randmatrix(int m, int n)
 {

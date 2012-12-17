@@ -9,6 +9,7 @@ EXECLPD=lpd
 EXECFM=fmult
 EXECD=demo
 CDEFFLAGS=-D MULT_NAIVE=1 -D REAL_COST -Wno-unused-result -O2
+CDEFFLAGS0=-D MULT_NAIVE=0 -D REAL_COST -Wno-unused-result -O2
 CFLAGS=$(CDEFFLAGS)
 COPTFLAGS=-D MULT_NAIVE=0 -D REAL_COST -D OSTRASSEN -D STOP=50 -O2 -Wno-unused-result
 
@@ -46,17 +47,20 @@ rand2: randmatrices.c
 
 # Variables dépendant des cibles
 strassen2: CFLAGS=$(COPTFLAGS)
+strassen0: CFLAGS=$(CDEFFLAGS0)
 strassenp: CFLAGS=$(CDEFFLAGS) -D PRINT
 
 
 strassen1: EXECSTR=strassen1
 strassen2: EXECSTR=strassen2
+strassen0: EXECSTR=strassen0
 strassenp: EXECSTR=strassenp
 
 # Strassen1 et 2 ne servent qu'à définir des variables spécifiques, le build 
 # est effectué par strassen
 strassen1: strassen
 strassen2: strassen
+strassen0: strassen
 strassenp: strassen
 
 # lpd:longproduct, effectue le produit de n matrices
