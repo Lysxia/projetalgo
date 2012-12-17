@@ -172,7 +172,8 @@ pour la mutliplication de matrices}
       xlabel=$n$,
       ylabel=time (s),
       ymin = 0, xmin = 0,
-      xmax = 3000]
+      xmax = 2000,
+      legend style ={at={(0.25,.65)}, anchor=south}]
       \addplot[smooth, mark=x, blue] table[x=n,y=naive] {databireme.dat};
       \addlegendentry{Naïf}
       
