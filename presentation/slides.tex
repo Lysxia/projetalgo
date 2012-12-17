@@ -2,7 +2,7 @@
 \usepackage[french]{babel}
 \usepackage[utf8]{inputenc}
 \usepackage{pgfplots}
-\usepackage{listings}
+\usepackage{qtree}
 %\usetheme{Warsaw}
 \title[Projet de programmation et d'algorithmique]{
 Algorithme de Strassen et parenthésage optimal
@@ -29,8 +29,8 @@ pour la mutliplication de matrices}
 \begin{frame}{Introduction}
   Objectifs :
   \begin{itemize}
-    \item Ecrire du C ;
-    \item Faire mieux que les algorithmes naifs.
+    \item Ecrire du C
+    \item Faire mieux que les algorithmes naifs
   \end{itemize}
 \end{frame}
 
@@ -40,14 +40,14 @@ pour la mutliplication de matrices}
 \begin{frame}[fragile]
   \frametitle{\insertsubsection}
   \begin{itemize}
-    \item Multiplication rapide de matrices sur un anneau ;
+    \item Multiplication rapide de matrices sur un anneau
     (ici, des \verb=int=)
-    \item Limiter le nombre de multiplications, en taille $2 \times 2$,
+    \item Limiter le nombre de multiplications ; en taille $2 \times 2$ :
     \begin{itemize}
-      \item mult. naïve : 8 multiplications scalaires,
-      \item mult. de Strassen : 7 multiplications ;
+      \item mult. naïve : 8 multiplications scalaires
+      \item mult. de Strassen : 7 multiplications
     \end{itemize}
-    \item Calcul par blocs, algorithme récursif.
+    \item Calcul par blocs, algorithme récursif
   \end{itemize}
 \end{frame}
 
@@ -55,20 +55,20 @@ pour la mutliplication de matrices}
 \begin{frame}[fragile]
   \frametitle{\insertsubsection}
   \framesubtitle{Structures de données}
-  Représentation compacte des données.
+  Représentation compacte des données
   \begin{itemize}
     \item<2-> Matrice $A$ de taille $m\times n$
     \begin{itemize}
       \item Tableau \verb=A= d'\verb=int=
-      (pointeur sur la première case) de taille \verb=m*n=,
+      (pointeur sur la première case) de taille \verb=m*n=
       %alloué dynamiquement
-      \item Accès à la case $(i,j)$ : \verb=A[i*n+j]= ;
+      \item Accès à la case $(i,j)$ : \verb=A[i*n+j]=
     \end{itemize}
     \item<3-> Sous-matrice $M$ extraite de $A$ de taille $m'\times n'$
     \begin{itemize}
-      \item Pointeur sur la première case de $M$ dans \verb=A=,
-      \item Largeur de la matrice $A$, \verb=n=,
-      \item Accès à la case $(i,j)$ : \verb=M[i*n+j]=.
+      \item Pointeur sur la première case de $M$ dans \verb=A=
+      \item Largeur de la matrice $A$, \verb=n=
+      \item Accès à la case $(i,j)$ : \verb=M[i*n+j]=
     \end{itemize}
   \end{itemize}
 \end{frame}
@@ -81,8 +81,8 @@ pour la mutliplication de matrices}
   \end{verbatim}\normalsize
 
   \begin{itemize}
-    \item Opérations auxiliaires presque en place.
-    \item Minimisation de la mémoire utilisée.
+    \item Opérations auxiliaires presque en place
+    \item Minimisation de la mémoire utilisée
   \end{itemize}
 \end{frame}
 
@@ -90,9 +90,10 @@ pour la mutliplication de matrices}
   \frametitle{\insertsubsection}
   \framesubtitle{Optimisation importante}
   \begin{itemize}
-  \item
-  Terminer avec une multiplication naive plus tôt dans la récursion ;
-  \item Taille optimale trouvée $\approx 50$.
+    \item
+    Terminer avec une multiplication naive plus tôt dans la récursion
+    \item Taille optimale trouvée $\approx 50$
+    \item Amélioration remarquable
   \end{itemize}
 \end{frame}
 
@@ -103,15 +104,15 @@ pour la mutliplication de matrices}
     \item Temps :
     \begin{itemize}
       \item $O(n^{\log_2 7})\approx O(n^{2.81})$
-      pour deux matrices carrées,
+      pour deux matrices carrées
       \item $O(\frac{m\cdot n\cdot p}{min(m,n,p)^{3-\log_2 7}})\approx
       O(\frac{m\cdot n\cdot p}{min(m,n,p)^{0.19}})$
-      en général ;
+      en général
     \end{itemize}
     \item Espace :
     \begin{itemize}
       \item $O(m\cdot n+n\cdot p+m\cdot p)$ en plus des matrices en entrée ;
-      transparent dans le code.
+      transparent dans le code
     \end{itemize}
   \end{itemize}
 \end{frame}
@@ -136,31 +137,98 @@ pour la mutliplication de matrices}
 \subsection{Principe}
 \begin{frame}
   \frametitle{\insertsubsection}
+  \begin{itemize}
+  \item Produit de $n$ matrices
+  % C'est bon là, pas la peine de réinventer la roue
+  % Tu dis juste que le produit de matrices est associatif
+  % non-commutatif en général. Il suffit donc de trouver le
+  % parenth. opti.
+  \item Différents coûts\\
+  \item Programmation dynamique
+  \end{itemize}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%MEC%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% en bas ca va pas dans le transparent on est d'accord ?
+
+  % Un produit de $n$ matrices est défini en se ramenant à $n - 1$ produit de
+  % $2$ matrices. Par associativité, on peut effectuer ces produits dans
+  % n'importe quel ordre, tant que l'on conserve l'ordre des matrices
+  % (c'est-à-dire qu'on essaye pas de les faire commuter).
+
+  % En revanche, le nombre d'opérations effectuées pour les différents
+  % parenthésages possibles n'est généralement pas le même. Par exemple :
+
+  % \[\mbox{Soit } A_1, A_2, A_3 \mbox{ des matrices de tailles respectives }
+  % 100\times 2, 2 \times 8000, 8000 \times 4\]
+
 \end{frame}
 
-\subsection{Implémentation}
 \begin{frame}
   \frametitle{\insertsubsection}
+  \framesubtitle{Exemple}
+  Produit $A_1 \times A_2 \times A_3$
+  \[
+  \begin{array}{cc} 
+    \mbox{Matrice} & \mbox{Taille}\\
+    A_1 & 1000 \times 2\\
+    A_2 & 2 \times 8000\\
+    A_3 & 8000 \times 400
+  \end{array}
+  \]
+  donne :
+  \[
+  \begin{array}{cc}
+    \mbox{Parenthésage} & \mbox{Coût (algorithme naïf)}\\
+    (A_1 \times A_2) \times A_3 & 3.216 \times 10^9\\
+    A_1 \times (A_2 \times A_3) & 7.2 \times 10^6
+  \end{array}
+  \]
 \end{frame}
-%représentation des données
+
+\subsection{Structure de données}
+\begin{frame}
+  \frametitle{\insertsubsection}
+  \begin{itemize}
+    \item Arbre de coupures
+    \item Représentation compacte
+    \item Détermination récursive des «~coupures~»
+    \item Respecte la propriété de sous-structure optimale
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{\insertsubsection}
+  \framesubtitle{Exemple}
+  \begin{itemize}
+    \item $((A_1 \cdot A_2) \cdot (A_3 \cdot A_4)) \cdot A_5$
+    \item Arbre de coupures :\\
+       \Tree[.4
+              [.2
+                [.1 $A_1$ $A_2$ ]
+                [.1 $A_3$ $A_4$ ]]
+              $A_5$ ]
+    \item Parcours préfixe : $4,2,1,1$
+  \end{itemize}
+\end{frame}
 
 \subsection{Complexité}
 \begin{frame}
   \frametitle{\insertsubsection}
+  Pour une chaîne de $n$ matrices :
+  \begin{itemize}
+    \item Temps : $O(n^3)$
+    \item Espace : $O(n^2)$
+  \end{itemize}
 \end{frame}
-% A faire :
-% Complexité, espace, temps
 
-
-%%%%%
-%%%%% Derniers slides
 
 \begin{frame}{Conclusion}
-  Des algorithmes de complexités asymptotiques meilleures
-  sont connus pour le parenthésage et la multiplication.
-
-  Mais l'algorithme de Strassen est plus efficace dans les
-  applications pratiques. (pour l'instant)
+  \begin{itemize}
+    \item Des algorithmes de complexités asymptotiques meilleures
+    sont connus pour le parenthésage et la multiplication.
+    \item Algorithme de Strassen plus efficace dans les
+    applications pratiques. (pour l'instant)
+  \end{itemize}
 \end{frame}
 
 \end{document}

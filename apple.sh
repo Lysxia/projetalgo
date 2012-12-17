@@ -2,7 +2,7 @@
 
 cd `dirname $0`
 
-make strassen
+make strassen2
 
 i=0
 

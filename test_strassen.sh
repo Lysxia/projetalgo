@@ -11,14 +11,14 @@ cat /proc/cpuinfo | grep -m 1 "model name" | sed 's/model name\t: //'
 echo -n "Revision: " 
 git rev-parse HEAD | cut -c1-10
 
-tmp=0
+tmp=3
 
 while [ -f ./strassen$tmp ]
 do
   tmp=$(($tmp+1))
 done
 
-cp strassen strassen$tmp
+cp strassen1 strassen$tmp
 
 #for i in {100..1000..10} # Start - stop - increment
 #do 
