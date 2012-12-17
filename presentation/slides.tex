@@ -1,8 +1,12 @@
 \documentclass{beamer}
 \usepackage[french]{babel}
 \usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\renewcommand{\familydefault}{\sfdefault}
 \usepackage{pgfplots}
 \usepackage{qtree}
+\usepackage{color}
 %\usetheme{Warsaw}
 \title[Projet de programmation et d'algorithmique]{
 Algorithme de Strassen et parenthésage optimal
@@ -120,14 +124,14 @@ pour la mutliplication de matrices}
 \subsection{Performance}
 \begin{frame}
   \frametitle{\insertsubsection}
-  \begin{tikzpicture}
+  \begin{tikzpicture}[scale=1.2]
   \begin{axis}[
     xlabel=n,
     ylabel=time (s)
   ]
   \addplot table[x=n,y=naive] {datastrassen.dat};
   \addplot table[x=n,y=strssn1] {datastrassen.dat};
-  \addplot table[x=n,y=strssn2] {datastrassen.dat};
+  \addplot table[x=n,y=strssn2] {optitetragone.dat};
   \end{axis}
   \end{tikzpicture}
 \end{frame}
@@ -146,9 +150,10 @@ pour la mutliplication de matrices}
   \item Différents coûts
   \item Programmation dynamique
   \end{itemize}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%MEC%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%% en bas ca va pas dans le transparent on est d'accord ?
+%%% en bas ca va pas dans le transparent on est d'accord ? Oui
 
   % Un produit de $n$ matrices est défini en se ramenant à $n - 1$ produit de
   % $2$ matrices. Par associativité, on peut effectuer ces produits dans
@@ -166,7 +171,7 @@ pour la mutliplication de matrices}
 \begin{frame}
   \frametitle{\insertsubsection}
   \framesubtitle{Exemple}
-  Produit $A_1 \times A_2 \times A_3$
+  Le produit $A_1 \times A_2 \times A_3$
   \[
   \begin{array}{cc} 
     \mbox{Matrice} & \mbox{Taille}\\
@@ -207,7 +212,7 @@ pour la mutliplication de matrices}
 \begin{frame}
   \frametitle{\insertsubsection}
   \begin{itemize}
-    \item Arbre de coupures
+    \item Arbre de coupures (exemple)
     \item Représentation compacte
   \end{itemize}
 \end{frame}
