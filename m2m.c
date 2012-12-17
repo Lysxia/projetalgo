@@ -55,7 +55,7 @@ int main (int argn, char** argv)
   printf("Naive mult...\n");
 #endif
 
-#ifdef MULT_NAIVE
+#if MULT_NAIVE==1
   t=clock();
   if (NULL == (D = naive_mult(A,B,m,n,o)))
   { 
