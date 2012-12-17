@@ -34,7 +34,7 @@ pour la mutliplication de matrices}
   Objectifs :
   \begin{itemize}
     \item Ecrire du C
-    \item Faire mieux que les algorithmes naifs
+    \item Faire mieux que les algorithmes naïfs
   \end{itemize}
 \end{frame}
 
@@ -86,7 +86,7 @@ pour la mutliplication de matrices}
 
   \begin{itemize}
     \item Opérations auxiliaires presque en place
-    \item Minimisation de la mémoire utilisée
+    \item Minimisation de la mémoire utilisée et des copies (coûteuses)
   \end{itemize}
 \end{frame}
 
@@ -94,10 +94,12 @@ pour la mutliplication de matrices}
   \frametitle{\insertsubsection}
   \framesubtitle{Optimisation importante}
   \begin{itemize}
-    \item
+  \item Strassen très peu performant sur les (sous-)matrices de petites
+    tailles (grands coefficients)
+  \item
     Terminer avec une multiplication naive plus tôt dans la récursion
-    \item Taille optimale trouvée $\approx 50$
-    \item Amélioration remarquable
+  \item Taille optimale trouvée $\approx 50$
+  \item Amélioration remarquable
   \end{itemize}
 \end{frame}
 
@@ -200,7 +202,7 @@ pour la mutliplication de matrices}
   % non-commutatif en général. Il suffit donc de trouver le
   % parenth. opti.
   \item Différents coûts
-  \item Programmation dynamique
+  \item Algorithme naïf : recherche exhaustive
   \end{itemize}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
