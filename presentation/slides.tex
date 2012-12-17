@@ -188,7 +188,7 @@ pour la mutliplication de matrices}
   \item
     Terminer avec une multiplication naive plus tôt dans la récursion
   \item Taille optimale trouvée $\approx 50$
-  \item Amélioration remarquable
+  \item Amélioration remarquable (facteur 10)
   \end{itemize}
 \end{frame}
 
@@ -221,7 +221,8 @@ pour la mutliplication de matrices}
     \begin{axis}[
       xlabel=$n$,
       ylabel=time (s),
-      ymin = 0, xmin = 1500, xmax = 7500]
+      ymin = 0, xmin = 1500, xmax = 7500,
+      legend style ={at={(0.25,.65)}, anchor=south}]
       \addplot[smooth, mark=x, blue] table[x=n,y=naive] {datatamarin.dat};
       \addlegendentry{Naïf}
       

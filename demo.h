@@ -1,4 +1,4 @@
-#ifndef CHECKER_H
-#define CHECKER_H
+#ifndef DEMO_H
+#define DEMO_H
 
 #endif
