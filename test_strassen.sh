@@ -20,11 +20,11 @@ done
 
 cp strassen1 strassen$tmp
 
-#for i in {100..1000..10} # Start - stop - increment
-#do 
-#    echo -n $i","
-#    ./rand2 $i $i $i | ./strassen$tmp
-#done
+for i in {100..1000..100} # Start - stop - increment
+do 
+    echo -n $i","
+    ./rand2 $i $i $i | ./strassen$tmp
+done
 
 
 for i in {1100..2000..100} # Start - stop - increment
@@ -34,10 +34,10 @@ do
 done
 
 
-for i in {2500..10000..500} # Start - stop - increment
-do 
-    echo -n $i","
-    ./rand2 $i $i $i | ./strassen$tmp
-done
+#for i in {2500..10000..500} # Start - stop - increment
+#do 
+#    echo -n $i","
+#    ./rand2 $i $i $i | ./strassen$tmp
+#done
 
 rm -f strassen$tmp
