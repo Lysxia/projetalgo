@@ -126,12 +126,18 @@ pour la mutliplication de matrices}
   \frametitle{\insertsubsection}
   \begin{tikzpicture}[scale=1.2]
   \begin{axis}[
-    xlabel=n,
+    xlabel=$n$,
     ylabel=time (s)
   ]
-  \addplot table[x=n,y=naive] {datastrassen.dat};
-  \addplot table[x=n,y=strssn1] {datastrassen.dat};
-  \addplot table[x=n,y=strssn2] {optitetragone.dat};
+  \addplot[smooth, mark=x, blue] table[x=n,y=naive] {datastrassen.dat};
+  \addlegendentry{Naïf}
+  
+  \addplot[smooth, mark=x, green] table[x=n,y=strssn1] {datastrassen.dat};
+  \addlegendentry{Strassen 1}
+  
+  \addplot[smooth, mark=x, red] table[x=n,y=strssn2] {optitetragone.dat};
+  \addlegendentry{Strassen 2}
+
   \end{axis}
   \end{tikzpicture}
 \end{frame}
