@@ -83,6 +83,19 @@ pour la mutliplication de matrices}
   \small\begin{verbatim}
   int* strassen(int* A, int* B, int m, int n, int p);
   \end{verbatim}\normalsize
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{\insertsubsection}
+  \framesubtitle{Implémentation}
+  \small\begin{verbatim}
+  void _strassen(int* A, int* B, int* C,
+                 int m, int n, int p,
+                 int width_A, int width_B, int width_C);
+  void _addl(int* A, int* B, int* C,
+             int mA, int nA, int mB, int nB,
+             int width_A, int width_B, int width_C);
+  \end{verbatim}\normalsize
 
   \begin{itemize}
     \item Opérations auxiliaires presque en place
@@ -251,7 +264,7 @@ pour la mutliplication de matrices}
       
       \addplot[smooth, mark=x, red] table[x=n,y=strssn2] {optitetragone.dat};
       \addlegendentry{Strassen 2}
-      
+
     \end{axis}
   \end{tikzpicture}
 \end{frame}
