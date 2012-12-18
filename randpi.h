@@ -3,5 +3,6 @@
 
 int* randmatrix(int m, int n);
 int** randmatrices(int n_mat, int**s, int min, int max);
+void freematrices(int** m,int n);
 
 #endif

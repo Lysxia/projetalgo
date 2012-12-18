@@ -17,7 +17,7 @@ default:
 	make default1
 	make default2
 
-default1: rand2 strassen1 lpd1 naive fmult1 demo1
+default1: rchain rand2 strassen1 lpd1 naive fmult1 demo1
 default2: strassen2 lpd2 fmult2 demo2
 
 # ____.:Build:.____
@@ -44,6 +44,8 @@ demo: $(SRC) $(HDR) $(PAR) $(PHD) demo.h demo.c
 rand2: randmatrices.c
 	gcc randmatrices.c -o rand2
 
+rchain: randpi.c matrixio.c matrixio.h randchain.c
+	gcc $(SRC) $(PAR) randchain.c -o rchain
 
 # Variables dépendant des cibles
 strassen2: CFLAGS=$(COPTFLAGS)

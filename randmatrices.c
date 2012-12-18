@@ -1,16 +1,16 @@
 #include<stdio.h>
 #include<stdlib.h>
 
-int main(int argn, char** argv)
+int main(int argc, char** argv)
 {
     int m=0,n=0,o=0;
     int i;
-    if (argn==1)
+    if (argc==1)
     {
 	printf("Matrix dimensions ? (3 integers) :");
 	scanf("%d %d %d ", &m, &n, &o);
     }
-    else if (argn==4)
+    else if (argc==4)
     {
 	int *s[3]={&m,&n,&o}, j;
 

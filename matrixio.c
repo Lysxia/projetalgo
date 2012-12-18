@@ -4,7 +4,7 @@
 #include "matrixio.h"
 #include "randpi.h"
 
-#define CENT 100
+#define CENT 64
 
 void _print_paren(int*,int*,int,int);
 
@@ -112,10 +112,16 @@ void print_paren(int* tree, int* s, int n)
 
 void print_rand(int n_mat, int min, int max)
 {
-    int *s, i;
+    int *s, i, j;
     int **m=randmatrices(n_mat,&s,min,max);
+    srand(n_mat*max*min);
+    printf("%d\n",n_mat);
     for (i=0 ; i<n_mat ; i++)
-	print_matrix(m[i],s[i],s[i+1]);
+    {
+	printf("%d %d\n",s[i], s[i+1]);
+        for (j = 0; j < s[i] * s[i+1]; j++)
+            printf((j + 1) % s[i+1] ? "%3d " : "%3d\n", m[i][j]);
+    }
     return;
 }
 

@@ -34,3 +34,11 @@ int** randmatrices(int n_mat, int** s, int min, int max)
 
     return m;
 }
+
+void freematrices(int** m, int n)
+{
+    int i;
+    for (i=0 ; i<n ; i++)
+	free(m[i]);
+    return;
+}

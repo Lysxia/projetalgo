@@ -35,6 +35,7 @@ int main(int argc, char** argv)
     sscanf(argv[3], "%d", &max);
 
     
+    srand(n*min*max);
     m = randmatrices(n, &s, min, max);
 
 #if PRINTDEMO
