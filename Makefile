@@ -17,7 +17,7 @@ default:
 	make default1
 	make default2
 
-default1: rchain rand2 strassen1 lpd1 naive fmult1 demo1
+default1: rand2 strassen1 lpd1 naive fmult1 demo1
 default2: strassen2 lpd2 fmult2 demo2
 
 # ____.:Build:.____

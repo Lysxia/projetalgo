@@ -77,6 +77,6 @@ int main(int argc, char** argv)
 	print_matrix(strassen_res,s[0],s[n]);
 #endif
     // No need to free : we're exiting, the OS will get all the memory back...
-    
+    free(strassen_res);
     return 0;    
 }
